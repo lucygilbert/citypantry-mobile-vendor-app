@@ -36,5 +36,7 @@
 
     <strong>Custom dietary requirements</strong>
     <p>{{order.customDietaryRequirements ? order.customDietaryRequirements : 'None.'}}</p>
+
+    <button class="button button-positive" ng-if="!accepted" ng-click="acceptOrder()">Accept</button>
   </ion-content>
 </ion-view>

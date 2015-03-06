@@ -1,5 +1,11 @@
 angular.module('starter.controllers', ['starter.constants'])
 
+.controller('TabsCtrl', function($scope, $state) {
+  $scope.navigateState = function(state) {
+    $state.go(state);
+  };
+})
+
 .controller('OrdersCtrl', function($scope, $rootScope, $http, SecurityService, API_BASE) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
@@ -11,17 +17,19 @@ angular.module('starter.controllers', ['starter.constants'])
   $scope.upcomingOrders = [];
 
   $http.get(API_BASE + '/orders/by-current-vendor', {headers: headers})
-    .success(function(response) {
-    var upcomingDate = new Date();
-    var deliveryDate = new Date();
-    upcomingDate.setDate(upcomingDate.getDate() - 3);
-    upcomingDate.setHours(0, 0, 0);
+      .success(function(response) {
+    var threeDaysFromNow = new Date();
+    threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
+    threeDaysFromNow.setHours(23, 59, 59);
+
     for (var i = 0; i < response.orders.length; i++) {
-      deliveryDate.setTime(Date.parse(response.orders[i].requestedDeliveryDate));
-      if (response.orders[i].status == 1) {
+      var deliveryDate = new Date(response.orders[i].requestedDeliveryDate);
+
+      if (response.orders[i].status === 1) {
         $scope.unconfirmedOrders.push(response.orders[i]);
       }
-      if (response.orders[i].status == 2 && deliveryDate.toDateString() >= upcomingDate.toDateString()) {
+
+      if (response.orders[i].status === 2 && deliveryDate < threeDaysFromNow) {
         $scope.upcomingOrders.push(response.orders[i]);
       }
     }
@@ -42,18 +50,29 @@ angular.module('starter.controllers', ['starter.constants'])
   $http.get(API_BASE + '/orders/' + $stateParams.orderId, {headers: headers})
       .success(function(response) {
     $scope.order = response;
+    $scope.accepted = response.status === 2;
   }).catch(function() {
     // @todo - Make a modal. #mkmdl
     alert("There has been an error, please try again.");
   });
+
+  $scope.acceptOrder = function() {
+    $http.put(API_BASE + '/order/' + $stateParams.orderId + '/accept', {}, {headers: headers})
+        .success(function() {
+      $scope.accepted = true;
+    }).catch(function() {
+      // @todo - Make a modal. #mkmdl
+      alert("There has been an error, please try again.");
+    });
+  };
 })
 
-.controller('UpcomingOrderCtrl', function($http, $scope, $stateParams, SecurityService, API_BASE) {
+.controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, SecurityService, API_BASE) {
   SecurityService.requireVendor();
-  $scope.finished = true;
-  $scope.leftKitchen = true;
-  $scope.late15 = true;
-  $scope.lateOver15 = true;
+  $scope.showDeliveredButton = true;
+  $scope.showLeftKitchenButton = true;
+  $scope.showLate15Button = true;
+  $scope.showLateOver15Button = true;
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
       'X-CityPantry-UserId': apiAuth.userId,
@@ -64,13 +83,13 @@ angular.module('starter.controllers', ['starter.constants'])
     .success(function(response) {
     switch (response.deliveryStatus) {
       case 4:
-        $scope.finished = false;
+        $scope.showDeliveredButton = false;
       case 3:
-        $scope.lateOver15 = false;
+        $scope.showLateOver15Button = false;
       case 2:
-        $scope.late15 = false;
+        $scope.showLate15Button = false;
       case 1:
-        $scope.leftKitchen = false;
+        $scope.showLeftKitchenButton = false;
       break;
     }
   }).catch(function() {
@@ -82,8 +101,9 @@ angular.module('starter.controllers', ['starter.constants'])
   $scope.markAsLeftKitchen = function() {};
   $scope.markAsLate15Minutes = function() {};
   $scope.markAsLateOver15Minutes = function() {};
-  $scope.callCityPantry = function() {};
-  $scope.viewOrder = function() {};
+  $scope.viewOrder = function() {
+    $state.go('tab.order-detail', {'orderId': $stateParams.orderId});
+  };
 })
 
 .controller('MessagesCtrl', function($scope, SecurityService) {
