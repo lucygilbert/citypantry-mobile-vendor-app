@@ -18,9 +18,12 @@ angular.module('starter.controllers', ['starter.constants'])
     upcomingDate.setHours(0, 0, 0);
     for (var i = 0; i < response.orders.length; i++) {
       deliveryDate.setTime(Date.parse(response.orders[i].requestedDeliveryDate));
-      if (response.orders[i].status == 1) $scope.unconfirmedOrders.push(response.orders[i]);
-      if (response.orders[i].status == 2 && deliveryDate.toDateString() >= upcomingDate.toDateString())
-          $scope.upcomingOrders.push(response.orders[i]);
+      if (response.orders[i].status == 1) {
+        $scope.unconfirmedOrders.push(response.orders[i]);
+      }
+      if (response.orders[i].status == 2 && deliveryDate.toDateString() >= upcomingDate.toDateString()) {
+        $scope.upcomingOrders.push(response.orders[i]);
+      }
     }
   }).catch(function() {
     // @todo - Make a modal. #mkmdl

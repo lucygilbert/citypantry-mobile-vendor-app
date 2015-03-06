@@ -1,3 +1,10 @@
 .cp-td {
 	padding: 5px;
 }
+
+.cp-item-body {
+  overflow: auto;
+  padding: 0;
+  text-overflow: inherit;
+  white-space: normal;
+}
