@@ -51,19 +51,19 @@ gulp.task('git-check', function(done) {
 });
 
 gulp.task('dev', function() {
-  gulp.src('./template/appsettings.js')
-    .pipe(preprocess({context: { NODE_ENV: 'DEVELOPMENT' }}))
-    .pipe(gulp.dest('./www/js/'));
+  gulp.src('www/js-templates/api-base.js')
+    .pipe(preprocess({context: { ENV: 'DEVELOPMENT' }}))
+    .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('testenv', function() {
   gulp.src('./template/appsettings.js')
-    .pipe(preprocess({context: { NODE_ENV: 'TEST' }}))
+    .pipe(preprocess({context: { ENV: 'TEST' }}))
     .pipe(gulp.dest('./www/js/'));
 });
 
 gulp.task('prod', function() {
   gulp.src('./template/appsettings.js')
-    .pipe(preprocess({context: { NODE_ENV: 'PRODUCTION'}}))
+    .pipe(preprocess({context: { ENV: 'PRODUCTION'}}))
     .pipe(gulp.dest('./www/js/'));
 });

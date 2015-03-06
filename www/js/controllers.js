@@ -1,7 +1,5 @@
 angular.module('starter.controllers', [])
 
-.constant('API_BASE', 'http://api.citypantry.dev')
-
 .controller('OrdersCtrl', function($scope, $rootScope, $http, SecurityService, API_BASE) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
