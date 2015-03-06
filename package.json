@@ -2,6 +2,10 @@
   "name": "mobile-app",
   "version": "1.0.0",
   "description": "mobile-app: An Ionic project",
+  "scripts": {
+    "run-local": "gulp dev && ionic serve",
+    "run-android": "gulp testenv && ionic run android"
+  },
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

@@ -57,13 +57,13 @@ gulp.task('dev', function() {
 });
 
 gulp.task('testenv', function() {
-  gulp.src('./template/appsettings.js')
+  gulp.src('www/js-templates/api-base.js')
     .pipe(preprocess({context: { ENV: 'TEST' }}))
-    .pipe(gulp.dest('./www/js/'));
+    .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('prod', function() {
-  gulp.src('./template/appsettings.js')
+  gulp.src('www/js-templates/api-base.js')
     .pipe(preprocess({context: { ENV: 'PRODUCTION'}}))
-    .pipe(gulp.dest('./www/js/'));
+    .pipe(gulp.dest('www/js/'));
 });

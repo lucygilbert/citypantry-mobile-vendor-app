@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['starter.constants'])
 
 .controller('OrdersCtrl', function($scope, $rootScope, $http, SecurityService, API_BASE) {
   SecurityService.requireVendor();
