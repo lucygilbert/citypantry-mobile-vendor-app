@@ -77,6 +77,13 @@ angular.module('starter.controllers', ['starter.constants'])
     // @todo - Make a modal. #mkmdl
     alert("There has been an error, please try again.");
   });
+
+  $scope.markAsFinished = function() {};
+  $scope.markAsLeftKitchen = function() {};
+  $scope.markAsLate15Minutes = function() {};
+  $scope.markAsLateOver15Minutes = function() {};
+  $scope.callCityPantry = function() {};
+  $scope.viewOrder = function() {};
 })
 
 .controller('MessagesCtrl', function($scope, SecurityService) {
