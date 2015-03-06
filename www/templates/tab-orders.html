@@ -1,0 +1,46 @@
+<ion-view view-title="Orders">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Unconfirmed orders</div>
+      <div class="item item-body">
+        <div>
+          <ion-item ng-repeat="order in unconfirmedOrders" type="item-text-wrap" href="#/tab/orders/{{order.id}}">
+            <table>
+              <tr>
+                <td class="cp-td"><strong>#</strong></td>
+                <td class="cp-td"><strong>Time</strong></td>
+                <td class="cp-td"><strong>Customer</strong></td>
+              </tr>
+              <tr>
+                <td class="cp-td">{{order.humanId}}</td>
+                <td class="cp-td">{{order.requestedDeliveryDate | date:'d MMM yyyy'}}<br />{{order.requestedDeliveryDate | date:'HH:mm'}}</td>
+                <td class="cp-td">{{order.customerUser.name}},<br /> {{order.customer.company}}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Upcoming orders</div>
+      <div class="item item-body">
+        <div>
+          <ion-item ng-repeat="order in upcomingOrders" type="item-text-wrap" href="#/tab/orders/upcoming/{{order.id}}">
+            <table>
+              <tr>
+                <td class="cp-td"><strong>#</strong></td>
+                <td class="cp-td"><strong>Time</strong></td>
+                <td class="cp-td"><strong>Customer</strong></td>
+              </tr>
+              <tr>
+                <td class="cp-td">{{order.humanId}}</td>
+                <td class="cp-td">{{order.requestedDeliveryDate | date:'d MMM yyyy'}}<br />{{order.requestedDeliveryDate | date:'HH:mm'}}</td>
+                <td class="cp-td">{{order.customerUser.name}},<br /> {{order.customer.company}}</td>
+              </tr>
+            </table>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

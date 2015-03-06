@@ -1,0 +1,40 @@
+<ion-view view-title="Order details">
+  <ion-content class="padding">
+    <h3>General</h3>
+
+    <table>
+      <tr>
+        <td class="cp-td"><strong>#</strong></td>
+        <td class="cp-td"><strong>Time</strong></td>
+        <td class="cp-td"><strong>Customer</strong></td>
+      </tr>
+      <tr>
+        <td class="cp-td">{{order.humanId}}</td>
+        <td class="cp-td">{{order.requestedDeliveryDate | date:'d MMM yyyy'}}<br />{{order.requestedDeliveryDate | date:'HH:mm'}}</td>
+        <td class="cp-td">{{order.customerUser.name}},<br /> {{order.customer.company}}</td>
+      </tr>
+    </table>
+
+    <h3>Delivery</h3>
+
+    <strong>Delivery Address</strong>
+    <p ng-bind-html="order.deliveryAddress | addressFormatter:true"></p>
+
+    <strong>Delivery Instructions</strong>
+    <p>{{order.deliveryInstruction}}</p>
+
+    <h3>Package</h3>
+
+    <strong>Package name</strong>
+    <p>{{order.package.name}}</p>
+
+    <strong>Head count</strong>
+    <p>{{order.headCount}}</p>
+
+    <strong>Vegetarian head count</strong>
+    <p>{{order.vegetarianHeadCount}}</p>
+
+    <strong>Custom dietary requirements</strong>
+    <p>{{order.customDietaryRequirements ? order.customDietaryRequirements : 'None.'}}</p>
+  </ion-content>
+</ion-view>

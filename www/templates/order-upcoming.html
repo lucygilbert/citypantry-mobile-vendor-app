@@ -1,0 +1,10 @@
+<ion-view view-title="Upcoming order">
+  <ion-content class="padding">
+    <button class="button button-block button-positive" ng-if="finished" ng-click="finishedBtn()">Finished</button>
+    <button class="button button-block button-positive" ng-if="leftKitchen" ng-click="leftKitchenBtn()">Left kitchen</button>
+    <button class="button button-block button-positive" ng-if="late15" ng-click="late15Btn()">Late &lt; 15 minutes</button>
+    <button class="button button-block button-positive" ng-if="lateOver15" ng-click="lateOver15Btn()">Late &gt; 15 minutes</button>
+    <button class="button button-block button-positive" ng-click="callCPBtn()">Call City Pantry</button>
+    <button class="button button-block button-positive" ng-click="viewOrderBtn()">View order details</button>
+  </ion-content>
+</ion-view>
