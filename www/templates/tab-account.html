@@ -6,22 +6,17 @@
         Edit business details
       </div>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your name', 'name')">
         <i class="icon ion-pricetags"></i>
         Edit name
       </a>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your description', 'description')">
         <i class="icon ion-compose"></i>
         Edit description
       </a>
 
-      <a class="item item-icon-left" href="#">
-        <i class="icon ion-briefcase"></i>
-        Change business type
-      </a>
-
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Change max people per day', 'maxPeople', false, true)">
         <i class="icon ion-person-stalker"></i>
         Change max people per day
       </a>
@@ -30,27 +25,27 @@
         Edit website details
       </div>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your website address', 'url', true)">
         <i class="icon ion-earth"></i>
         Edit your website address
       </a>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your Facebook address', 'facebookUrl', true)">
         <i class="icon ion-social-facebook"></i>
         Edit your Facebook address
       </a>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your Twitter address', 'twitterUrl', true)">
         <i class="icon ion-social-twitter"></i>
         Edit your Twitter address
       </a>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your Google+ address', 'googlePlusUrl', true)">
         <i class="icon ion-social-googleplus"></i>
         Edit your Google+ address
       </a>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="showEditBox('Edit your Youtube address', 'youtubeUrl', true)">
         <i class="icon ion-social-youtube"></i>
         Edit your Youtube address
       </a>
@@ -59,7 +54,7 @@
         General
       </div>
 
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left" ng-click="logOut()">
         <i class="icon ion-power"></i>
         Log out
       </a>

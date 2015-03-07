@@ -107,4 +107,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/orders');
 
+})
+
+.run(function($rootScope) {
+  $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams){
+    var toController = toState.views[Object.keys(toState.views)[0]].controller;
+    $rootScope.$broadcast('refresh' + toController);
+  });
 });
