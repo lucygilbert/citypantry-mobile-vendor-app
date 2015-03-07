@@ -2,8 +2,8 @@
   <ion-content class="padding">
     <button class="button button-block button-positive" ng-if="showDeliveredButton" ng-click="markAsFinished()">Delivered</button>
     <button class="button button-block button-positive" ng-if="showLeftKitchenButton" ng-click="markAsLeftKitchen()">Left kitchen</button>
-    <button class="button button-block button-positive" ng-if="showLate15Button" ng-click="markAsLate15()">Late &lt; 15 minutes</button>
-    <button class="button button-block button-positive" ng-if="showLateOver15Button" ng-click="markAsLateOver15()">Late &gt; 15 minutes</button>
+    <button class="button button-block button-positive" ng-if="showLate15Button" ng-click="markAsLate15Minutes()">Late &lt; 15 minutes</button>
+    <button class="button button-block button-positive" ng-if="showLateOver15Button" ng-click="markAsLateOver15Minutes()">Late &gt; 15 minutes</button>
     <a class="button button-block button-positive" href="tel:+442033978376">Call City Pantry</a>
     <button class="button button-block button-positive" ng-click="viewOrder()">View order details</button>
   </ion-content>
