@@ -8,3 +8,7 @@
   text-overflow: inherit;
   white-space: normal;
 }
+
+.button-positive {
+  background-color: #2e8272;
+}

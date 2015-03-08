@@ -92,7 +92,7 @@ angular.module('starter.controllers', ['starter.constants'])
 })
 
 .controller('OrderDetailCtrl', function($scope, $http, $stateParams, $ionicHistory, AlertService, SecurityService,
-    API_BASE, watchForControllerRefresh) {
+    LoadingService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -129,7 +129,7 @@ angular.module('starter.controllers', ['starter.constants'])
 })
 
 .controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, $ionicHistory, AlertService,
-    SecurityService, API_BASE, watchForControllerRefresh) {
+    LoadingService, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -222,7 +222,7 @@ angular.module('starter.controllers', ['starter.constants'])
 })
 
 .controller('MessagesCtrl', function($scope, $http, AlertService, SecurityService,
-    watchForControllerRefresh, API_BASE) {
+    LoadingService, watchForControllerRefresh, API_BASE) {
   SecurityService.requireVendor();
 
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
@@ -249,7 +249,7 @@ angular.module('starter.controllers', ['starter.constants'])
 })
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, $http, AlertService, SecurityService,
-    API_BASE, watchForControllerRefresh) {
+    LoadingService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -303,7 +303,7 @@ angular.module('starter.controllers', ['starter.constants'])
 })
 
 .controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $ionicHistory, $http, $location,
-    AlertService, SecurityService, API_BASE, watchForControllerRefresh) {
+    AlertService, LoadingService, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
