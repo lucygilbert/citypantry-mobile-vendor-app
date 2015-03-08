@@ -18,6 +18,20 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
+.service('LoadingService', function($ionicLoading) {
+  return {
+    show: function() {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    },
+
+    hide: function() {
+      $ionicLoading.hide();
+    }
+  };
+})
+
 .controller('TabsCtrl', function($scope, $state) {
   $scope.navigateState = function(state) {
     $state.go(state);
@@ -31,7 +45,7 @@ angular.module('starter.controllers', ['starter.constants'])
 })
 
 .controller('OrdersCtrl', function($scope, $rootScope, $http, $ionicHistory, SecurityService, API_BASE,
-    AlertService, watchForControllerRefresh) {
+    AlertService, LoadingService, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -44,6 +58,7 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('OrdersCtrl', refreshView);
 
   function refreshView() {
+    LoadingService.show();
 
     $http.get(API_BASE + '/orders/by-current-vendor', {headers: headers})
         .success(function(response) {
@@ -68,6 +83,8 @@ angular.module('starter.controllers', ['starter.constants'])
           $scope.upcomingOrders.push(response.orders[i]);
         }
       }
+
+      LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error, please try again.');
     });
@@ -88,11 +105,14 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('OrderDetailCtrl', refreshView);
 
   function refreshView() {
+    LoadingService.show();
 
     $http.get(API_BASE + '/orders/' + $stateParams.orderId, {headers: headers})
         .success(function(response) {
       $scope.order = response;
       $scope.accepted = response.status === 2;
+
+      LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error, please try again.');
     });
@@ -122,6 +142,8 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('UpcomingOrderCtrl', refreshView);
 
   function refreshView() {
+    LoadingService.show();
+
     $scope.showDeliveredButton = true;
     $scope.showLeftKitchenButton = true;
     $scope.showLate15Button = true;
@@ -141,6 +163,8 @@ angular.module('starter.controllers', ['starter.constants'])
           $scope.showLeftKitchenButton = false;
         break;
       }
+
+      LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error, please try again.');
     });
@@ -212,8 +236,11 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('MessagesCtrl', refreshView);
 
   function refreshView() {
+    LoadingService.show();
+
     $http.get(API_BASE + '/orders/with-messages', {headers: headers}).success(function(response) {
       $scope.ordersWithMessages = response;
+      LoadingService.hide();
     }).catch(function(response) {
       AlertService.infoAlert('There has been an error, please try again later.');
     });
@@ -235,9 +262,13 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('MessageDetailCtrl', refreshView);
 
   function refreshView() {
+    LoadingService.show();
+
     $http.get(API_BASE + '/orders/' + $stateParams.orderId + '/messages', {headers: headers})
         .success(function(response) {
       $scope.orderMessages = response;
+
+      LoadingService.hide();
     }).catch(function(response) {
       AlertService.infoAlert('There has been an error, please try again later.');
     });
@@ -285,11 +316,13 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('OrdersCtrl', refreshView);
 
   function refreshView() {
+    LoadingService.show();
+
     $scope.vendor = {};
 
     $http.get(API_BASE + '/users/get-authenticated-user', {headers: headers}).success(function(response) {
       $scope.vendor = response.vendor;
-      console.log($scope.vendor);
+      LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error.');
       $scope.logOut();
