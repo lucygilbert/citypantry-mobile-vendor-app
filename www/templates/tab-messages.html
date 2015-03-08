@@ -1,7 +1,7 @@
 <ion-view view-title="Messages">
   <ion-content>
     <ion-list>
-      <ion-item class="item-icon-left" ng-repeat="order in ordersWithMessages" type="item-text-wrap" href="#/tab/messages/{{order.id}}">
+      <ion-item class="item-icon-left" ng-repeat="order in ordersWithMessages" type="item-text-wrap" href="#/tab/messages/{{order.orderId}}">
         <i class="icon ion-email"></i>
         <h2>Order #{{order.orderHumanId}}</h2>
         <p><strong>{{order.lastMessageDate | date: 'd MMM HH:MM'}}</strong><br />{{order.lastMessageText}}</p>

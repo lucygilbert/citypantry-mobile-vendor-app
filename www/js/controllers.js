@@ -211,8 +211,24 @@ angular.module('starter.controllers', ['starter.constants'])
 
 })
 
-.controller('MessageDetailCtrl', function($scope, SecurityService) {
+.controller('MessageDetailCtrl', function($scope, $stateParams, $http, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
+  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
+  var headers = {
+      'X-CityPantry-UserId': apiAuth.userId,
+      'X-CityPantry-AuthToken': apiAuth.salt,
+  };
+
+  refreshView();
+
+  watchForControllerRefresh('MessageDetailCtrl', refreshView);
+
+  function refreshView() {
+    $http.get(API_BASE + '/orders/' + $stateParams.orderId + '/messages', {headers: headers})
+        .success(function(response) {
+      $scope.orderMessages = response;
+    });
+  }
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $http, $location, SecurityService, API_BASE) {
