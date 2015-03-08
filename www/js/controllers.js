@@ -6,6 +6,18 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
+.service('AlertService', function($ionicPopup) {
+  return {
+    infoAlert: function(message, title) {
+      title = title || 'Error';
+      var errorPopup = $ionicPopup.alert({
+        title: title,
+        template: message
+      });
+    }
+  };
+})
+
 .controller('TabsCtrl', function($scope, $state) {
   $scope.navigateState = function(state) {
     $state.go(state);
@@ -18,7 +30,8 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
-.controller('OrdersCtrl', function($scope, $rootScope, $http, $ionicHistory, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('OrdersCtrl', function($scope, $rootScope, $http, $ionicHistory, SecurityService, API_BASE,
+    AlertService, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -56,13 +69,13 @@ angular.module('starter.controllers', ['starter.constants'])
         }
       }
     }).catch(function() {
-      // @todo - Make a modal. #mkmdl
-      alert("There has been an error, please try again.");
+      AlertService.infoAlert('There has been an error, please try again.');
     });
   }
 })
 
-.controller('OrderDetailCtrl', function($scope, $http, $stateParams, $ionicHistory, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('OrderDetailCtrl', function($scope, $http, $stateParams, $ionicHistory, AlertService, SecurityService,
+    API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -81,8 +94,7 @@ angular.module('starter.controllers', ['starter.constants'])
       $scope.order = response;
       $scope.accepted = response.status === 2;
     }).catch(function() {
-      // @todo - Make a modal. #mkmdl
-      alert("There has been an error, please try again.");
+      AlertService.infoAlert('There has been an error, please try again.');
     });
   }
 
@@ -91,13 +103,13 @@ angular.module('starter.controllers', ['starter.constants'])
         .success(function() {
       $scope.accepted = true;
     }).catch(function() {
-      // @todo - Make a modal. #mkmdl
-      alert("There has been an error, please try again.");
+      AlertService.infoAlert("There has been an error, please try again.");
     });
   };
 })
 
-.controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, $ionicHistory, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, $ionicHistory, AlertService,
+    SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -130,8 +142,7 @@ angular.module('starter.controllers', ['starter.constants'])
         break;
       }
     }).catch(function() {
-      // @todo - Make a modal. #mkmdl
-      alert("There has been an error, please try again.");
+      AlertService.infoAlert('There has been an error, please try again.');
     });
   }
 
@@ -142,55 +153,52 @@ angular.module('starter.controllers', ['starter.constants'])
       $scope.showLateOver15Button = false;
       $scope.showLate15Button = false;
       $scope.showLeftKitchenButton = false;
-      // @todo - Make a modal. #mkmdl
-      alert('Order marked as finished.');
+      AlertService.infoAlert('Order marked as finished.', 'Information');
     }).catch(function(response) {
-      // @todo - Make a modal. #mkmdl
-      alert(response.data.errorTranslation);
+      AlertService.infoAlert(response.data.errorTranslation);
     });
   };
+
   $scope.markAsLeftKitchen = function() {
     $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 1},
         {headers: headers}).success(function () {
       $scope.showLeftKitchenButton = false;
-      // @todo - Make a modal. #mkmdl
-      alert('Order marked as having left the kitchen.');
+      AlertService.infoAlert('Order marked as having left the kitchen.', 'Information');
     }).catch(function(response) {
-      // @todo - Make a modal. #mkmdl
-      alert(response.data.errorTranslation);
+      AlertService.infoAlert(response.data.errorTranslation);
     });
   };
+
   $scope.markAsLate15Minutes = function() {
     $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 2},
         {headers: headers}).success(function () {
       $scope.showLate15Button = false;
       $scope.showLeftKitchenButton = false;
-      // @todo - Make a modal. #mkmdl
-      alert('Order marked as late by less than 15 minutes.');
+      AlertService.infoAlert('Order marked as late by less than 15 minutes.', 'Information');
     }).catch(function(response) {
-      // @todo - Make a modal. #mkmdl
-      alert(response.data.errorTranslation);
+      AlertService.infoAlert(response.data.errorTranslation);
     });
   };
+
   $scope.markAsLateOver15Minutes = function() {
     $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 3},
         {headers: headers}).success(function () {
       $scope.showLate15Button = false;
       $scope.showLeftKitchenButton = false;
       $scope.showLateOver15Button = false;
-      // @todo - Make a modal. #mkmdl
-      alert('Order marked as late by more than 15 minutes.');
+      AlertService.infoAlert('Order marked as late by more than 15 minutes.', 'Information');
     }).catch(function(response) {
-      // @todo - Make a modal. #mkmdl
-      alert(response.data.errorTranslation);
+      AlertService.infoAlert(response.data.errorTranslation);
     });
   };
+
   $scope.viewOrder = function() {
     $state.go('tab.order-detail', {'orderId': $stateParams.orderId});
   };
 })
 
-.controller('MessagesCtrl', function($scope, $http, SecurityService, watchForControllerRefresh, API_BASE) {
+.controller('MessagesCtrl', function($scope, $http, AlertService, SecurityService,
+    watchForControllerRefresh, API_BASE) {
   SecurityService.requireVendor();
 
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
@@ -206,12 +214,15 @@ angular.module('starter.controllers', ['starter.constants'])
   function refreshView() {
     $http.get(API_BASE + '/orders/with-messages', {headers: headers}).success(function(response) {
       $scope.ordersWithMessages = response;
+    }).catch(function(response) {
+      AlertService.infoAlert('There has been an error, please try again later.');
     });
   }
 
 })
 
-.controller('MessageDetailCtrl', function($scope, $stateParams, $http, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('MessageDetailCtrl', function($scope, $stateParams, $http, AlertService, SecurityService,
+    API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -227,11 +238,13 @@ angular.module('starter.controllers', ['starter.constants'])
     $http.get(API_BASE + '/orders/' + $stateParams.orderId + '/messages', {headers: headers})
         .success(function(response) {
       $scope.orderMessages = response;
+    }).catch(function(response) {
+      AlertService.infoAlert('There has been an error, please try again later.');
     });
   }
 })
 
-.controller('LoginCtrl', function($scope, $rootScope, $http, $location, SecurityService, API_BASE) {
+.controller('LoginCtrl', function($scope, $rootScope, $http, $location, AlertService, SecurityService, API_BASE) {
   SecurityService.requireLoggedOut();
   $scope.details = {};
   $scope.login = function() {
@@ -248,19 +261,18 @@ angular.module('starter.controllers', ['starter.constants'])
           localStorage.removeItem('apiAuth');
           localStorage.removeItem('user');
           $scope.details = {};
-          // @todo - Make a modal. #mkmdl
-          alert('Vendor only');
+          AlertService.infoAlert('Vendors only.');
         }
 
       }).catch(function(response) {
         $scope.details = {};
-        // @todo - Make a modal. #mkmdl
-        alert(response.data.errorTranslation);
+        AlertService.infoAlert(response.data.errorTranslation);
       });
   };
 })
 
-.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $ionicHistory, $http, $location, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $ionicHistory, $http, $location,
+    AlertService, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -273,15 +285,14 @@ angular.module('starter.controllers', ['starter.constants'])
   watchForControllerRefresh('OrdersCtrl', refreshView);
 
   function refreshView() {
-
     $scope.vendor = {};
 
     $http.get(API_BASE + '/users/get-authenticated-user', {headers: headers}).success(function(response) {
       $scope.vendor = response.vendor;
       console.log($scope.vendor);
     }).catch(function() {
-      // @todo - Make a modal. #mkmdl
-      alert('There has been an error.');
+      AlertService.infoAlert('There has been an error.');
+      $scope.logOut();
     });
   }
 
@@ -308,11 +319,9 @@ angular.module('starter.controllers', ['starter.constants'])
               var updateInfo = {};
               updateInfo[vendorKeyName] = $scope.vendor[vendorKeyName];
               $http.put(API_BASE + '/vendors/me', updateInfo, {headers: headers}).success(function() {
-                // @todo - Make a modal. #mkmdl
-                alert('Updated.');
+                AlertService.infoAlert('Your information has been updated.', 'Information');
               }).catch(function() {
-                // @todo - Make a modal. #mkmdl
-                alert('Failed.');
+                AlertService.infoAlert('There has been an error, please try again.');
               });
             }
           }
