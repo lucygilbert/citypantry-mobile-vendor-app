@@ -111,7 +111,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 .run(function($rootScope) {
   $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams){
-    var toController = toState.views[Object.keys(toState.views)[0]].controller;
-    $rootScope.$broadcast('refresh' + toController);
+    if (toState.views) {
+      var toController = toState.views[Object.keys(toState.views)[0]].controller;
+      $rootScope.$broadcast('refresh' + toController);
+    }
   });
 });
