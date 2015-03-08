@@ -1,15 +1,10 @@
 <ion-view view-title="Messages">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/messages/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
+      <ion-item class="item-icon-left" ng-repeat="order in ordersWithMessages" type="item-text-wrap" href="#/tab/messages/{{order.id}}">
+        <i class="icon ion-email"></i>
+        <h2>Order #{{order.orderHumanId}}</h2>
+        <p><strong>{{order.lastMessageDate | date: 'd MMM HH:MM'}}</strong><br />{{order.lastMessageText}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

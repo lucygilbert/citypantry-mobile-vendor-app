@@ -62,7 +62,7 @@ angular.module('starter.controllers', ['starter.constants'])
   }
 })
 
-.controller('OrderDetailCtrl', function($scope, $http, $stateParams, $ionicHistory, SecurityService, API_BASE) {
+.controller('OrderDetailCtrl', function($scope, $http, $stateParams, $ionicHistory, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -97,7 +97,7 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
-.controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, $ionicHistory, SecurityService, API_BASE) {
+.controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, $ionicHistory, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -190,8 +190,25 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
-.controller('MessagesCtrl', function($scope, SecurityService) {
+.controller('MessagesCtrl', function($scope, $http, SecurityService, watchForControllerRefresh, API_BASE) {
   SecurityService.requireVendor();
+
+  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
+  var headers = {
+      'X-CityPantry-UserId': apiAuth.userId,
+      'X-CityPantry-AuthToken': apiAuth.salt,
+  };
+
+  refreshView();
+
+  watchForControllerRefresh('MessagesCtrl', refreshView);
+
+  function refreshView() {
+    $http.get(API_BASE + '/orders/with-messages', {headers: headers}).success(function(response) {
+      $scope.ordersWithMessages = response;
+    });
+  }
+
 })
 
 .controller('MessageDetailCtrl', function($scope, SecurityService) {
@@ -201,7 +218,6 @@ angular.module('starter.controllers', ['starter.constants'])
 .controller('LoginCtrl', function($scope, $rootScope, $http, $location, SecurityService, API_BASE) {
   SecurityService.requireLoggedOut();
   $scope.details = {};
-  console.log($rootScope.isLoggedIn);
   $scope.login = function() {
       var postData = {email: $scope.details.email, plainPassword: $scope.details.password};
       $http.post(API_BASE + '/user/login', postData).success(function(response) {
@@ -228,7 +244,7 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
-.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $ionicHistory, $http, $location, SecurityService, API_BASE) {
+.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $ionicHistory, $http, $location, SecurityService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
