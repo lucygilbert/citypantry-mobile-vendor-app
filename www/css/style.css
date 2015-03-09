@@ -13,3 +13,15 @@
   background-color: #2e8272 !important;
   border: 1px solid #2e8272 !important;
 }
+
+.bar-stable {
+  background-color: #242157 !important;
+}
+
+.bar.bar-stable .title {
+  color: white !important;
+}
+
+.back-button {
+  color: white !important;
+}
