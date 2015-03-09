@@ -14,6 +14,7 @@ angular.module('cp-vendor-app.controllers')
     ApiFactory.getOrdersByCurrentVendor().success(function(response) {
       $scope.unconfirmedOrders = [];
       $scope.upcomingOrders = [];
+      console.log($scope.unconfirmedOrders);
 
       var threeDaysFromNow = new Date();
       threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
