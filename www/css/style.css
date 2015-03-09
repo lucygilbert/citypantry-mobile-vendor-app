@@ -2,6 +2,10 @@
 	padding: 5px;
 }
 
+.cp-table {
+  width: 100%;
+}
+
 .cp-item-body {
   overflow: auto;
   padding: 0;

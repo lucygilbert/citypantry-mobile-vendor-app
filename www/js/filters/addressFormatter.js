@@ -6,7 +6,7 @@ angular.module('cp-vendor-app.filters', [])
       return '';
     }
 
-    var separator = (multi ? ', <br />' : ', ');
+    var separator = (multi ? '<br />' : ', ');
 
     return address.addressLine1 +
           (address.addressLine2 ? separator + address.addressLine2 : '') +
