@@ -3,7 +3,7 @@
     <ion-list>
       <ion-item ng-repeat="message in orderMessages.messages" type="item-text-wrap">
         <h2>{{message.sender === 'vendor' ? 'Me' : orderMessages.order.customer.user.name}}</h2>
-        <p><strong>{{message.dateSent | date: 'd MMM HH:mm'}}</strong><br />{{message.message}}</p>
+        <p><strong>{{message.dateSent | date: 'd MMM HH:mm'}}</strong><br /><span ng-bind-html="message.message | messageFormatter"></span></p>
       </ion-item>
       <ion-item type="item-text-wrap item-icon-left" ng-click="showMessageBox()">
         <i class="ion-plus"></i>
