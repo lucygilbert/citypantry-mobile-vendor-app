@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['starter.constants'])
+angular.module('starter.controllers', [])
 
 .controller('TabsCtrl', function($scope, $state) {
   $scope.navigateState = function(state) {
@@ -12,14 +12,9 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
-.controller('OrdersCtrl', function($scope, $rootScope, $http, $ionicHistory, SecurityService, API_BASE,
-    AlertService, LoadingService, watchForControllerRefresh) {
+.controller('OrdersCtrl', function($scope, SecurityService, ApiFactory,
+    ModalService, LoadingService, watchForControllerRefresh) {
   SecurityService.requireVendor();
-  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
-  var headers = {
-      'X-CityPantry-UserId': apiAuth.userId,
-      'X-CityPantry-AuthToken': apiAuth.salt,
-  };
 
   refreshView();
 
@@ -28,8 +23,7 @@ angular.module('starter.controllers', ['starter.constants'])
   function refreshView() {
     LoadingService.show();
 
-    $http.get(API_BASE + '/orders/by-current-vendor', {headers: headers})
-        .success(function(response) {
+    ApiFactory.getOrdersByCurrentVendor().success(function(response) {
       $scope.unconfirmedOrders = [];
       $scope.upcomingOrders = [];
 
@@ -54,20 +48,15 @@ angular.module('starter.controllers', ['starter.constants'])
 
       LoadingService.hide();
     }).catch(function() {
-      AlertService.infoAlert('There has been an error, please try again.');
+      ModalService.infoModal('There has been an error, please try again.');
       LoadingService.hide();
     });
   }
 })
 
-.controller('OrderDetailCtrl', function($scope, $http, $stateParams, $ionicHistory, AlertService, SecurityService,
-    LoadingService, API_BASE, watchForControllerRefresh) {
+.controller('OrderDetailCtrl', function($scope, $stateParams, ModalService, SecurityService,
+    LoadingService, ApiFactory, watchForControllerRefresh) {
   SecurityService.requireVendor();
-  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
-  var headers = {
-      'X-CityPantry-UserId': apiAuth.userId,
-      'X-CityPantry-AuthToken': apiAuth.salt,
-  };
 
   refreshView();
 
@@ -76,36 +65,29 @@ angular.module('starter.controllers', ['starter.constants'])
   function refreshView() {
     LoadingService.show();
 
-    $http.get(API_BASE + '/orders/' + $stateParams.orderId, {headers: headers})
-        .success(function(response) {
+    ApiFactory.getOrder($stateParams.orderId).success(function(response) {
       $scope.order = response;
       $scope.accepted = response.status === 2;
 
       LoadingService.hide();
     }).catch(function() {
-      AlertService.infoAlert('There has been an error, please try again.');
+      ModalService.infoModal('There has been an error, please try again.');
       LoadingService.hide();
     });
   }
 
   $scope.acceptOrder = function() {
-    $http.put(API_BASE + '/order/' + $stateParams.orderId + '/accept', {}, {headers: headers})
-        .success(function() {
+    ApiFactory.acceptOrder($stateParams.orderId).success(function() {
       $scope.accepted = true;
     }).catch(function() {
-      AlertService.infoAlert("There has been an error, please try again.");
+      ModalService.infoModal("There has been an error, please try again.");
     });
   };
 })
 
-.controller('UpcomingOrderCtrl', function($http, $scope, $state, $stateParams, $ionicHistory, AlertService,
-    LoadingService, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('UpcomingOrderCtrl', function($scope, $state, $stateParams, ModalService,
+    LoadingService, SecurityService, ApiFactory, watchForControllerRefresh) {
   SecurityService.requireVendor();
-  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
-  var headers = {
-      'X-CityPantry-UserId': apiAuth.userId,
-      'X-CityPantry-AuthToken': apiAuth.salt,
-  };
 
   refreshView();
 
@@ -119,9 +101,7 @@ angular.module('starter.controllers', ['starter.constants'])
     $scope.showLate15Button = true;
     $scope.showLateOver15Button = true;
 
-    $http.get(API_BASE + '/orders/' + $stateParams.orderId, {headers: headers})
-      .success(function(response) {
-      console.log(response.deliveryStatus);
+    ApiFactory.getOrder($stateParams.orderId).success(function(response) {
       switch (response.deliveryStatus) {
         case 4:
           $scope.showDeliveredButton = false;
@@ -132,58 +112,56 @@ angular.module('starter.controllers', ['starter.constants'])
         case 1:
           $scope.showLeftKitchenButton = false;
         break;
+        default:
+        break;
       }
 
       LoadingService.hide();
     }).catch(function() {
-      AlertService.infoAlert('There has been an error, please try again.');
+      ModalService.infoModal('There has been an error, please try again.');
       LoadingService.hide();
     });
   }
 
   $scope.markAsFinished = function() {
-    $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 4},
-        {headers: headers}).success(function () {
+    ApiFactory.setDeliveryStatus($stateParams.orderId, 4).success(function () {
       $scope.showDeliveredButton = false;
       $scope.showLateOver15Button = false;
       $scope.showLate15Button = false;
       $scope.showLeftKitchenButton = false;
-      AlertService.infoAlert('Order marked as finished.', 'Information');
+      ModalService.infoModal('Order marked as finished.', 'Information');
     }).catch(function(response) {
-      AlertService.infoAlert(response.data.errorTranslation);
+      ModalService.infoModal(response.data.errorTranslation);
     });
   };
 
   $scope.markAsLeftKitchen = function() {
-    $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 1},
-        {headers: headers}).success(function () {
+    ApiFactory.setDeliveryStatus($stateParams.orderId, 1).success(function () {
       $scope.showLeftKitchenButton = false;
-      AlertService.infoAlert('Order marked as having left the kitchen.', 'Information');
+      ModalService.infoModal('Order marked as having left the kitchen.', 'Information');
     }).catch(function(response) {
-      AlertService.infoAlert(response.data.errorTranslation);
+      ModalService.infoModal(response.data.errorTranslation);
     });
   };
 
   $scope.markAsLate15Minutes = function() {
-    $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 2},
-        {headers: headers}).success(function () {
+    ApiFactory.setDeliveryStatus($stateParams.orderId, 2).success(function () {
       $scope.showLate15Button = false;
       $scope.showLeftKitchenButton = false;
-      AlertService.infoAlert('Order marked as late by less than 15 minutes.', 'Information');
+      ModalService.infoModal('Order marked as late by less than 15 minutes.', 'Information');
     }).catch(function(response) {
-      AlertService.infoAlert(response.data.errorTranslation);
+      ModalService.infoModal(response.data.errorTranslation);
     });
   };
 
   $scope.markAsLateOver15Minutes = function() {
-    $http.put(API_BASE + '/order/' + $stateParams.orderId + '/delivery-status', {deliveryStatus: 3},
-        {headers: headers}).success(function () {
+    ApiFactory.setDeliveryStatus($stateParams.orderId, 3).success(function () {
       $scope.showLate15Button = false;
       $scope.showLeftKitchenButton = false;
       $scope.showLateOver15Button = false;
-      AlertService.infoAlert('Order marked as late by more than 15 minutes.', 'Information');
+      ModalService.infoModal('Order marked as late by more than 15 minutes.', 'Information');
     }).catch(function(response) {
-      AlertService.infoAlert(response.data.errorTranslation);
+      ModalService.infoModal(response.data.errorTranslation);
     });
   };
 
@@ -192,15 +170,9 @@ angular.module('starter.controllers', ['starter.constants'])
   };
 })
 
-.controller('MessagesCtrl', function($scope, $http, AlertService, SecurityService,
-    LoadingService, watchForControllerRefresh, API_BASE) {
+.controller('MessagesCtrl', function($scope, ModalService, SecurityService,
+    LoadingService, watchForControllerRefresh, ApiFactory) {
   SecurityService.requireVendor();
-
-  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
-  var headers = {
-      'X-CityPantry-UserId': apiAuth.userId,
-      'X-CityPantry-AuthToken': apiAuth.salt,
-  };
 
   refreshView();
 
@@ -209,25 +181,20 @@ angular.module('starter.controllers', ['starter.constants'])
   function refreshView() {
     LoadingService.show();
 
-    $http.get(API_BASE + '/orders/with-messages', {headers: headers}).success(function(response) {
+    ApiFactory.getOrdersWithMessages().success(function(response) {
       $scope.ordersWithMessages = response;
       LoadingService.hide();
     }).catch(function(response) {
-      AlertService.infoAlert('There has been an error, please try again later.');
+      ModalService.infoModal('There has been an error, please try again later.');
       LoadingService.hide();
     });
   }
 
 })
 
-.controller('MessageDetailCtrl', function($scope, $stateParams, $http, $ionicPopup, AlertService, SecurityService,
-    LoadingService, AlertService, API_BASE, watchForControllerRefresh) {
+.controller('MessageDetailCtrl', function($scope, $stateParams, $ionicPopup, ModalService, SecurityService,
+    LoadingService, watchForControllerRefresh, ApiFactory) {
   SecurityService.requireVendor();
-  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
-  var headers = {
-      'X-CityPantry-UserId': apiAuth.userId,
-      'X-CityPantry-AuthToken': apiAuth.salt,
-  };
 
   refreshView();
 
@@ -236,53 +203,26 @@ angular.module('starter.controllers', ['starter.constants'])
   function refreshView() {
     LoadingService.show();
 
-    $http.get(API_BASE + '/orders/' + $stateParams.orderId + '/messages', {headers: headers})
-        .success(function(response) {
+    ApiFactory.getOrderMessages($stateParams.orderId).success(function(response) {
       $scope.orderMessages = response;
 
       LoadingService.hide();
     }).catch(function(response) {
-      AlertService.infoAlert('There has been an error, please try again later.');
+      ModalService.infoModal('There has been an error, please try again later.');
       LoadingService.hide();
     });
   }
 
   $scope.showMessageBox = function() {
-    $scope.addMessageText = {message: null};
-
-    var editBox = $ionicPopup.show({
-      title: 'Add message',
-      template: '<textarea required ng-model="addMessageText.message"></textarea>',
-      scope: $scope,
-      buttons:[
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Send',
-          type: 'button-positive',
-          onTap: function(e) {
-            $http.put(API_BASE + '/orders/' + $scope.orderMessages.order.id + '/messages',
-                $scope.addMessageText, {headers: headers}).success(function() {
-              console.log($scope.addMessageText);
-              AlertService.infoAlert('Your message has been sent.', 'Information');
-              refreshView();
-            }).catch(function() {
-              AlertService.infoAlert('There has been an error, please try again.');
-            });
-          }
-        }
-      ]
-    });
+    ModalService.messageModal($stateParams.orderId, refreshView);
   };
 })
 
-.controller('LoginCtrl', function($scope, $rootScope, $http, $location, AlertService, SecurityService, API_BASE) {
+.controller('LoginCtrl', function($scope, $rootScope, $location, ApiFactory, ModalService, SecurityService) {
   SecurityService.requireLoggedOut();
   $scope.details = {};
   $scope.login = function() {
-      var postData = {email: $scope.details.email, plainPassword: $scope.details.password};
-      $http.post(API_BASE + '/user/login', postData).success(function(response) {
+      ApiFactory.logIn($scope.details.email, $scope.details.password).success(function(response) {
         $rootScope.isLoggedIn = true;
         localStorage.setItem('apiAuth', JSON.stringify(response.apiAuth));
         localStorage.setItem('user', JSON.stringify(response.user));
@@ -294,24 +234,19 @@ angular.module('starter.controllers', ['starter.constants'])
           localStorage.removeItem('apiAuth');
           localStorage.removeItem('user');
           $scope.details = {};
-          AlertService.infoAlert('Vendors only.');
+          ModalService.infoModal('Vendors only.');
         }
 
       }).catch(function(response) {
         $scope.details = {};
-        AlertService.infoAlert(response.data.errorTranslation);
+        ModalService.infoModal(response.data.errorTranslation);
       });
   };
 })
 
-.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $ionicHistory, $http, $location,
-    AlertService, LoadingService, SecurityService, API_BASE, watchForControllerRefresh) {
+.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $location, ApiFactory,
+    ModalService, LoadingService, SecurityService, watchForControllerRefresh) {
   SecurityService.requireVendor();
-  var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
-  var headers = {
-      'X-CityPantry-UserId': apiAuth.userId,
-      'X-CityPantry-AuthToken': apiAuth.salt,
-  };
 
   refreshView();
 
@@ -320,50 +255,20 @@ angular.module('starter.controllers', ['starter.constants'])
   function refreshView() {
     LoadingService.show();
 
-    $scope.vendor = {};
+    $rootScope.vendor = {};
 
-    $http.get(API_BASE + '/users/get-authenticated-user', {headers: headers}).success(function(response) {
-      $scope.vendor = response.vendor;
+    ApiFactory.getAuthenticatedUser().success(function(response) {
+      $rootScope.vendor = response.vendor;
       LoadingService.hide();
     }).catch(function() {
-      AlertService.infoAlert('There has been an error.');
+      ModalService.infoModal('There has been an error.');
       LoadingService.hide();
       $scope.logOut();
     });
   }
 
   $scope.showEditBox = function(title, vendorKeyName, canBeEmpty, isNumeric) {
-    canBeEmpty = canBeEmpty || false;
-    isNumeric = isNumeric || false;
-
-    var editBox = $ionicPopup.show({
-      title: title,
-      subTitle: canBeEmpty ? null : (isNumeric ? 'This field can only contain numbers' : 'This field cannot be empty'),
-      template: '<input id="' + vendorKeyName + '" type="' + (isNumeric ? 'number' : 'text') + '" ' + (canBeEmpty ? '' : 'required') + ' ng-model="vendor.' + vendorKeyName + '" />',
-      scope: $scope,
-      buttons:[
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Save',
-          type: 'button-positive',
-          onTap: function(e) {
-            if(!canBeEmpty && !$scope.vendor[vendorKeyName]) {
-              e.preventDefault();
-            } else {
-              var updateInfo = {};
-              updateInfo[vendorKeyName] = $scope.vendor[vendorKeyName];
-              $http.put(API_BASE + '/vendors/me', updateInfo, {headers: headers}).success(function() {
-                AlertService.infoAlert('Your information has been updated.', 'Information');
-              }).catch(function() {
-                AlertService.infoAlert('There has been an error, please try again.');
-              });
-            }
-          }
-        }
-      ]
-    });
+    ModalService.editModal(title, vendorKeyName, canBeEmpty, isNumeric);
   };
 
   $scope.logOut = function() {
