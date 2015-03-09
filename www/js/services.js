@@ -1,5 +1,37 @@
 angular.module('starter.services', [])
 
+.service('watchForControllerRefresh', function($rootScope) {
+  return function(controllerName, callback) {
+    $rootScope.$on('refresh' + controllerName, callback);
+  };
+})
+
+.service('AlertService', function($ionicPopup) {
+  return {
+    infoAlert: function(message, title) {
+      title = title || 'Error';
+      var errorPopup = $ionicPopup.alert({
+        title: title,
+        template: message
+      });
+    }
+  };
+})
+
+.service('LoadingService', function($ionicLoading) {
+  return {
+    show: function() {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    },
+
+    hide: function() {
+      $ionicLoading.hide();
+    }
+  };
+})
+
 .service('SecurityService', function($location) {
     return {
         getUser: function() {

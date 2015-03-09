@@ -1,37 +1,5 @@
 angular.module('starter.controllers', ['starter.constants'])
 
-.service('watchForControllerRefresh', function($rootScope) {
-  return function(controllerName, callback) {
-    $rootScope.$on('refresh' + controllerName, callback);
-  };
-})
-
-.service('AlertService', function($ionicPopup) {
-  return {
-    infoAlert: function(message, title) {
-      title = title || 'Error';
-      var errorPopup = $ionicPopup.alert({
-        title: title,
-        template: message
-      });
-    }
-  };
-})
-
-.service('LoadingService', function($ionicLoading) {
-  return {
-    show: function() {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
-    },
-
-    hide: function() {
-      $ionicLoading.hide();
-    }
-  };
-})
-
 .controller('TabsCtrl', function($scope, $state) {
   $scope.navigateState = function(state) {
     $state.go(state);
@@ -87,6 +55,7 @@ angular.module('starter.controllers', ['starter.constants'])
       LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error, please try again.');
+      LoadingService.hide();
     });
   }
 })
@@ -115,6 +84,7 @@ angular.module('starter.controllers', ['starter.constants'])
       LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error, please try again.');
+      LoadingService.hide();
     });
   }
 
@@ -167,6 +137,7 @@ angular.module('starter.controllers', ['starter.constants'])
       LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error, please try again.');
+      LoadingService.hide();
     });
   }
 
@@ -243,13 +214,14 @@ angular.module('starter.controllers', ['starter.constants'])
       LoadingService.hide();
     }).catch(function(response) {
       AlertService.infoAlert('There has been an error, please try again later.');
+      LoadingService.hide();
     });
   }
 
 })
 
-.controller('MessageDetailCtrl', function($scope, $stateParams, $http, AlertService, SecurityService,
-    LoadingService, API_BASE, watchForControllerRefresh) {
+.controller('MessageDetailCtrl', function($scope, $stateParams, $http, $ionicPopup, AlertService, SecurityService,
+    LoadingService, AlertService, API_BASE, watchForControllerRefresh) {
   SecurityService.requireVendor();
   var apiAuth = JSON.parse(localStorage.getItem('apiAuth'));
   var headers = {
@@ -271,8 +243,38 @@ angular.module('starter.controllers', ['starter.constants'])
       LoadingService.hide();
     }).catch(function(response) {
       AlertService.infoAlert('There has been an error, please try again later.');
+      LoadingService.hide();
     });
   }
+
+  $scope.showMessageBox = function() {
+    $scope.addMessageText = {message: null};
+
+    var editBox = $ionicPopup.show({
+      title: 'Add message',
+      template: '<textarea required ng-model="addMessageText.message"></textarea>',
+      scope: $scope,
+      buttons:[
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Send',
+          type: 'button-positive',
+          onTap: function(e) {
+            $http.put(API_BASE + '/orders/' + $scope.orderMessages.order.id + '/messages',
+                $scope.addMessageText, {headers: headers}).success(function() {
+              console.log($scope.addMessageText);
+              AlertService.infoAlert('Your message has been sent.', 'Information');
+              refreshView();
+            }).catch(function() {
+              AlertService.infoAlert('There has been an error, please try again.');
+            });
+          }
+        }
+      ]
+    });
+  };
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $http, $location, AlertService, SecurityService, API_BASE) {
@@ -325,6 +327,7 @@ angular.module('starter.controllers', ['starter.constants'])
       LoadingService.hide();
     }).catch(function() {
       AlertService.infoAlert('There has been an error.');
+      LoadingService.hide();
       $scope.logOut();
     });
   }
