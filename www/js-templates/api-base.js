@@ -1,4 +1,4 @@
-angular.module('starter.constants', [])
+angular.module('cp-vendor-app.constants', [])
 // @if ENV == 'DEVELOPMENT'
 .constant('API_BASE', 'http://api.citypantry.dev')
 // @endif

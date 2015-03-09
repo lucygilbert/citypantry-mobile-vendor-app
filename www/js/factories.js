@@ -1,4 +1,4 @@
-angular.module('starter.factories', [])
+angular.module('cp-vendor-app.factories', [])
 
 .factory('ApiFactory', function(ApiService, API_BASE) {
   return {

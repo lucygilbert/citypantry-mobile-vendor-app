@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('cp-vendor-app.controllers', [])
 
 .controller('TabsCtrl', function($scope, $state) {
   $scope.navigateState = function(state) {
