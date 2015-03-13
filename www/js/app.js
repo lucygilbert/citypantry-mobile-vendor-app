@@ -19,6 +19,7 @@ angular.module('cp-vendor-app', [
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
+
   $stateProvider
 
   .state('tab', {
