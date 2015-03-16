@@ -1,4 +1,4 @@
-ddescribe('Message pages', function() {
+describe('Message pages', function() {
   var first = true;
 
   beforeEach(function() {

@@ -67,3 +67,20 @@
   background-image: url('../img/messages.png');
   background-size:contain;
 }
+
+.account {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/account.png');
+  opacity: 0.8;
+  background-size:contain;
+}
+
+.account-on {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/account.png');
+  background-size:contain;
+}
