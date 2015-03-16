@@ -29,3 +29,41 @@
 .back-button {
   color: white !important;
 }
+
+.tabs {
+  padding-top: 4px;
+}
+
+.orders {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/orders.png');
+  opacity: 0.8;
+  background-size:contain;
+}
+
+.orders-on {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/orders.png');
+  background-size:contain;
+}
+
+.messages {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/messages.png');
+  opacity: 0.8;
+  background-size:contain;
+}
+
+.messages-on {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/messages.png');
+  background-size:contain;
+}
