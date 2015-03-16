@@ -1,4 +1,4 @@
-ddescribe('Upcoming order page', function() {
+describe('Upcoming order page', function() {
   var first = true;
 
   beforeEach(function() {
