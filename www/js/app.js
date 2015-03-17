@@ -22,6 +22,19 @@ angular.module('cp-vendor-app', [
 
   $stateProvider
 
+  .state('redirectToHomepage', {
+    url: '/redirect-to-homepage',
+    controller: function(SecurityService, $state) {
+      if (!SecurityService.isLoggedIn()) {
+        $state.go('login');
+      } else if (SecurityService.isVendor()) {
+        $state.go('tab.orders');
+      } else {
+        throw new Error('Unable to redirect the user.');
+      }
+    }
+  })
+
   .state('tab', {
     url: "/tab",
     abstract: true,
@@ -94,8 +107,7 @@ angular.module('cp-vendor-app', [
     }
   });
 
-  $urlRouterProvider.otherwise('/tab/orders');
-
+  $urlRouterProvider.otherwise('/redirect-to-homepage');
 })
 
 .run(function($rootScope) {

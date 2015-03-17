@@ -1,6 +1,6 @@
 angular.module('cp-vendor-app.controllers', [])
 
-.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $location, ApiFactory,
+.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $state, ApiFactory,
     ModalService, LoadingService, SecurityService, watchForControllerRefresh) {
   SecurityService.requireVendor();
 
@@ -31,6 +31,6 @@ angular.module('cp-vendor-app.controllers', [])
     $rootScope.isLoggedIn = false;
     localStorage.removeItem('apiAuth');
     localStorage.removeItem('user');
-    $location.path('/login');
+    $state.go('login');
   };
 });

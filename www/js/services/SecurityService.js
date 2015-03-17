@@ -1,6 +1,6 @@
 angular.module('cp-vendor-app.services')
 
-.service('SecurityService', function($location) {
+.service('SecurityService', function($state) {
     return {
         getUser: function() {
             return (localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : false;
@@ -33,21 +33,25 @@ angular.module('cp-vendor-app.services')
             return !!localStorage.user;
         },
 
+        isVendor: function() {
+          return this.inGroup(['admin', 'user']);
+        },
+
         requireLoggedIn: function() {
             if (!this.isLoggedIn()) {
-                $location.path('/login');
+                $state.go('login');
             }
         },
 
         requireLoggedOut: function() {
             if (this.isLoggedIn()) {
-                $location.path('/');
+                $state.go('redirectToHomepage');
             }
         },
 
         requireVendor: function() {
-            if (!this.isLoggedIn() || !this.inGroup(['admin', 'user'])) {
-                $location.path('/login');
+            if (!this.isVendor()) {
+                $state.go('redirectToHomepage');
             }
         }
     };

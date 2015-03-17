@@ -1,16 +1,17 @@
 angular.module('cp-vendor-app.controllers')
 
-.controller('LoginCtrl', function($scope, $rootScope, $location, ApiFactory, ModalService, SecurityService) {
+.controller('LoginCtrl', function($scope, $rootScope, $state, ApiFactory, ModalService, SecurityService) {
   SecurityService.requireLoggedOut();
   $scope.details = {};
   $scope.login = function() {
       ApiFactory.logIn($scope.details.email, $scope.details.password).success(function(response) {
         $rootScope.isLoggedIn = true;
+
         localStorage.setItem('apiAuth', JSON.stringify(response.apiAuth));
         localStorage.setItem('user', JSON.stringify(response.user));
-        console.log($rootScope.isLoggedIn);
-        if (SecurityService.inGroup(['admin', 'user'])) {
-          $location.path('/');
+
+        if (SecurityService.isVendor()) {
+          $state.go('redirectToHomepage');
         } else {
           $rootScope.isLoggedIn = false;
           localStorage.removeItem('apiAuth');
