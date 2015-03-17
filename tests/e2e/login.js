@@ -10,24 +10,24 @@ describe('Login page', function() {
     element(by.id('login_submit')).click();
   }
 
-  function testModal(message) {
+  function expectPopupIsDisplayedAndHasMessage(message) {
     expect(element(by.css('.popup')).isDisplayed()).toBe(true);
     expect(element(by.css('div.popup-body span')).getText()).toBe(message);
   }
 
   it('should show an error modal if the email is wrong', function() {
     attemptLogIn('hurp@du.rp', 'password');
-    testModal('Email/password is incorrect');
+    expectPopupIsDisplayedAndHasMessage('Email/password is incorrect');
   });
 
   it('should show an error modal if the password is wrong', function() {
     attemptLogIn('vendor@bunnies.test', 'wrong');
-    testModal('Email/password is incorrect');
+    expectPopupIsDisplayedAndHasMessage('Email/password is incorrect');
   });
 
   it('should show an error modal if user is not vendor', function() {
     attemptLogIn('customer@bunnies.test', 'password');
-    testModal('Vendors only.');
+    expectPopupIsDisplayedAndHasMessage('Vendors only.');
   });
 
   it('should redirect to Orders page upon successful login', function() {
