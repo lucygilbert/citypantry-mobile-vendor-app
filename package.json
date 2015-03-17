@@ -5,7 +5,8 @@
   "scripts": {
     "run-local": "gulp dev && ionic serve",
     "run-android": "gulp testenv && ionic run android",
-    "protractor": "bin/load-db-fixtures && node_modules/protractor/bin/protractor etc/protractor.js"
+    "protractor": "bin/load-db-fixtures && node_modules/protractor/bin/protractor etc/protractor.js",
+    "postinstall": "ln -s ../../bin/pre-commit .git/hooks/pre-commit && chmod +x bin/*"
   },
   "dependencies": {
     "gulp": "^3.5.6",
@@ -22,6 +23,7 @@
     "protractor": "~1.0.0",
     "chromedriver": "~2.9.1-1",
     "selenium-webdriver": "~2.x",
-    "gulp-preprocess": "~1.2.0"
+    "gulp-preprocess": "~1.2.0",
+    "jshint": "~2.6.0"
   }
 }
