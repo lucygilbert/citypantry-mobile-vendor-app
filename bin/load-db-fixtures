@@ -1,0 +1,5 @@
+#!/bin/bash
+
+id=$( vagrant global-status | grep running | grep -i citypantry | awk '{ print $1 }' )
+
+vagrant ssh $id -c "/home/citypantry/project/api/app/console doctrine:mongodb:fixtures:load";
