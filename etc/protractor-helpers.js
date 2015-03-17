@@ -1,14 +1,8 @@
 module.exports = {
   logout: function() {
-    browser.get('/account');
+    browser.get('/#/tab/account');
 
     element(by.id('logOutButton')).click();
-
-    browser.driver.wait(function() {
-      return browser.driver.getCurrentUrl().then(function(url) {
-        return (/\/login$/.test(url));
-      });
-    });
   },
 
   loginAsUser: function(email) {
@@ -16,18 +10,11 @@ module.exports = {
       throw new Error('Must give an email address!');
     }
 
-    browser.get('/login');
+    browser.get('/#/login');
 
     element(by.id('login_email')).sendKeys(email);
     element(by.id('login_password')).sendKeys('password');
-
-    element(by.css('login_submit')).click();
-
-    browser.wait(function() {
-      return browser.getCurrentUrl().then(function(url) {
-        return (/\/$/.test(url));
-      });
-    });
+    element(by.id('login_submit')).click();
   },
 
   scrollTo: function(element) {

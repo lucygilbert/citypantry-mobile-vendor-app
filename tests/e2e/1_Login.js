@@ -6,7 +6,6 @@ describe('Login page', function() {
   function attemptLogIn(email, password) {
     element(by.id('login_email')).sendKeys(email);
     element(by.id('login_password')).sendKeys(password);
-
     element(by.id('login_submit')).click();
   }
 
@@ -31,17 +30,7 @@ describe('Login page', function() {
   });
 
   it('should redirect to Orders page upon successful login', function() {
-    attemptLogIn('vendor@bunnies.test', 'password');
+    loginAsUser('vendor@bunnies.test');
     expect(browser.getCurrentUrl()).toMatch(/\/#\/tab\/orders$/);
-  });
-
-  it('should be able to logout', function() {
-    browser.get('/#/tab/account');
-
-    var logoutButton = element(by.id('logOutButton'));
-    scrollTo(logoutButton);
-    logoutButton.click();
-
-    expect(browser.getCurrentUrl()).toMatch(/\/#\/login$/);
   });
 });
