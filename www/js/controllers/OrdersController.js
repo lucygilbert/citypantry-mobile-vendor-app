@@ -4,17 +4,12 @@ angular.module('cp-vendor-app.controllers')
     ModalService, LoadingService, watchForControllerRefresh) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('OrdersCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
     ApiFactory.getOrdersByCurrentVendor().success(function(response) {
       $scope.unconfirmedOrders = [];
       $scope.upcomingOrders = [];
-      console.log($scope.unconfirmedOrders);
 
       var threeDaysFromNow = new Date();
       threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
@@ -41,4 +36,8 @@ angular.module('cp-vendor-app.controllers')
       LoadingService.hide();
     });
   }
+
+  refreshView();
+
+  watchForControllerRefresh('OrdersCtrl', refreshView);
 });

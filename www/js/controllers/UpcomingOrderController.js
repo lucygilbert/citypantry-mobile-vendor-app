@@ -4,10 +4,6 @@ angular.module('cp-vendor-app.controllers')
     LoadingService, SecurityService, ApiFactory, watchForControllerRefresh) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('UpcomingOrderCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
@@ -20,15 +16,22 @@ angular.module('cp-vendor-app.controllers')
       switch (response.deliveryStatus) {
         case 4:
           $scope.showDeliveredButton = false;
+          $scope.showLateOver15Button = false;
+          $scope.showLate15Button = false;
+          $scope.showLeftKitchenButton = false;
+          break;
         case 3:
           $scope.showLateOver15Button = false;
+          $scope.showLate15Button = false;
+          $scope.showLeftKitchenButton = false;
+          break;
         case 2:
           $scope.showLate15Button = false;
+          $scope.showLeftKitchenButton = false;
+          break;
         case 1:
           $scope.showLeftKitchenButton = false;
-        break;
-        default:
-        break;
+          break;
       }
 
       LoadingService.hide();
@@ -37,6 +40,10 @@ angular.module('cp-vendor-app.controllers')
       LoadingService.hide();
     });
   }
+
+  refreshView();
+
+  watchForControllerRefresh('UpcomingOrderCtrl', refreshView);
 
   $scope.markAsFinished = function() {
     ApiFactory.setDeliveryStatus($stateParams.orderId, 4).success(function () {

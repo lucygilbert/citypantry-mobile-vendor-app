@@ -36,9 +36,9 @@ angular.module('cp-vendor-app', [
   })
 
   .state('tab', {
-    url: "/tab",
+    url: '/tab',
     abstract: true,
-    templateUrl: "templates/tabs.html",
+    templateUrl: 'templates/tabs.html',
     controller: 'TabsCtrl'
   })
 

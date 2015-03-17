@@ -16,25 +16,25 @@ angular.module('cp-vendor-app.services', [])
 
   return {
     get: function(url) {
-      config = addAuthHeaders();
+      var config = addAuthHeaders();
 
       return $http.get(url, config);
     },
 
     post: function(url, data) {
-      config = addAuthHeaders();
+      var config = addAuthHeaders();
 
       return $http.post(url, data, config);
     },
 
     put: function(url, data) {
-      config = addAuthHeaders();
+      var config = addAuthHeaders();
 
       return $http.put(url, data, config);
     },
 
     'delete': function(url) {
-      config = addAuthHeaders();
+      var config = addAuthHeaders();
 
       return $http.delete(url, config);
     }

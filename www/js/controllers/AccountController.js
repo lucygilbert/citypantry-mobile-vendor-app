@@ -4,10 +4,6 @@ angular.module('cp-vendor-app.controllers', [])
     ModalService, LoadingService, SecurityService, watchForControllerRefresh) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('OrdersCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
@@ -22,6 +18,10 @@ angular.module('cp-vendor-app.controllers', [])
       $scope.logOut();
     });
   }
+
+  refreshView();
+
+  watchForControllerRefresh('OrdersCtrl', refreshView);
 
   $scope.showEditBox = function(title, vendorKeyName, canBeEmpty, isNumeric) {
     ModalService.editModal(title, vendorKeyName, canBeEmpty, isNumeric);

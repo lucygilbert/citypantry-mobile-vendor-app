@@ -4,4 +4,4 @@ angular.module('cp-vendor-app.services')
   return function(controllerName, callback) {
     $rootScope.$on('refresh' + controllerName, callback);
   };
-})
+});

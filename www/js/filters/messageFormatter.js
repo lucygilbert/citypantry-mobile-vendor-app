@@ -9,5 +9,5 @@ angular.module('cp-vendor-app.filters')
     var formattedMessage = message.replace('\n', '<br/>');
 
     return formattedMessage;
-  }
+  };
 });

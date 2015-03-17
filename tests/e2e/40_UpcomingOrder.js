@@ -22,7 +22,7 @@ describe('Upcoming order page', function() {
 
   it('should show buttons to take an action', function() {
     expectButtons(['Delivered', 'Left kitchen', 'Late < 15 minutes', 'Late > 15 minutes', 'Call City Pantry', 'View order details']);
-  })
+  });
 
   it('should hide the Left Kitchen button when clicked', function() {
     buttons.get(1).click();

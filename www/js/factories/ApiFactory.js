@@ -42,4 +42,4 @@ angular.module('cp-vendor-app.factories', [])
       return ApiService.put(API_BASE + '/vendors/me', updateInfo);
     },
   };
-})
+});

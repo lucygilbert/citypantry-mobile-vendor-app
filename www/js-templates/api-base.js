@@ -8,3 +8,4 @@ angular.module('cp-vendor-app.constants', [])
 // @if ENV == 'PRODUCTION'
 .constant('API_BASE', 'http://api.citypantry.com')
 // @endif
+;

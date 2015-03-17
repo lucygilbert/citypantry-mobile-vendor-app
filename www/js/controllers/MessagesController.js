@@ -4,10 +4,6 @@ angular.module('cp-vendor-app.controllers')
     LoadingService, watchForControllerRefresh, ApiFactory) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('MessagesCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
@@ -20,4 +16,7 @@ angular.module('cp-vendor-app.controllers')
     });
   }
 
+  refreshView();
+
+  watchForControllerRefresh('MessagesCtrl', refreshView);
 });

@@ -4,10 +4,6 @@ angular.module('cp-vendor-app.controllers')
     LoadingService, ApiFactory, watchForControllerRefresh) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('OrderDetailCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
@@ -22,11 +18,15 @@ angular.module('cp-vendor-app.controllers')
     });
   }
 
+  refreshView();
+
+  watchForControllerRefresh('OrderDetailCtrl', refreshView);
+
   $scope.acceptOrder = function() {
     ApiFactory.acceptOrder($stateParams.orderId).success(function() {
       $scope.accepted = true;
     }).catch(function() {
-      ModalService.infoModal("There has been an error, please try again.");
+      ModalService.infoModal('There has been an error, please try again.');
     });
   };
 });

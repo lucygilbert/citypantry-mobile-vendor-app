@@ -4,10 +4,6 @@ angular.module('cp-vendor-app.controllers')
     LoadingService, watchForControllerRefresh, ApiFactory) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('MessageDetailCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
@@ -20,6 +16,10 @@ angular.module('cp-vendor-app.controllers')
       LoadingService.hide();
     });
   }
+
+  refreshView();
+
+  watchForControllerRefresh('MessageDetailCtrl', refreshView);
 
   $scope.showMessageBox = function() {
     ModalService.messageModal($stateParams.orderId, refreshView);

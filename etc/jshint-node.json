@@ -24,6 +24,7 @@
         "protractor": false,
         "by": false,
         "loginAsUser": false,
-        "logout": false
+        "logout": false,
+        "scrollTo": false
     }
 }
