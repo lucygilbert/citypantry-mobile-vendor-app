@@ -4,7 +4,8 @@
   "description": "mobile-app: An Ionic project",
   "scripts": {
     "run-local": "gulp dev && ionic serve",
-    "run-android": "gulp testenv && ionic run android"
+    "run-android": "gulp testenv && ionic run android",
+    "protractor": "bin/load-db-fixtures && node_modules/protractor/bin/protractor etc/protractor.js"
   },
   "dependencies": {
     "gulp": "^3.5.6",
