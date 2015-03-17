@@ -39,7 +39,7 @@ describe('Orders and order details page', function() {
   });
 
   it('should hide Accept button once clicked', function() {
-    scrollTo(element(by.id('acceptButton')).getWebElement());
+    scrollTo(element(by.id('acceptButton')));
 
     element(by.id('acceptButton')).click();
 

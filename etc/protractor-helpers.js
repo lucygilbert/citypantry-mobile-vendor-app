@@ -31,6 +31,7 @@ module.exports = {
   },
 
   scrollTo: function(element) {
-    browser.executeScript('arguments[0].scrollIntoView(false)', element);
+    var webElement = element.getWebElement();
+    browser.executeScript('arguments[0].scrollIntoView(false)', webElement);
   },
 }
