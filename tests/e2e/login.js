@@ -33,8 +33,15 @@ describe('Login page', function() {
   it('should redirect to Orders page upon successful login', function() {
     attemptLogIn('vendor@bunnies.test', 'password');
     expect(browser.getCurrentUrl()).toMatch(/\/#\/tab\/orders$/);
+  });
 
+  it('should be able to logout', function() {
     browser.get('/#/tab/account');
-    element(by.id('logOutButton')).click();
+
+    var logoutButton = element(by.id('logOutButton'));
+    scrollTo(logoutButton);
+    logoutButton.click();
+
+    expect(browser.getCurrentUrl()).toMatch(/\/#\/login$/);
   });
 });
