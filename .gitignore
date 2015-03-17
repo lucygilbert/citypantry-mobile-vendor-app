@@ -5,3 +5,7 @@ node_modules/
 platforms/
 plugins/
 www/js/api-base.js
+/vagrant2015*
+/d2015*
+/.vagrant
+/npm-debug.log
