@@ -4,7 +4,7 @@ describe('Account settings page', function() {
   beforeEach(function() {
     if (first) {
       first = false;
-      element.all(by.css('ion-tabs .tab-item')).last().click();
+      element.all(by.css('ion-tabs .tab-item')).get(2).click();
       expect(browser.getCurrentUrl()).toMatch(/\/#\/tab\/account$/);
     }
   });

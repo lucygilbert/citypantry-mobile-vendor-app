@@ -4,23 +4,22 @@ angular.module('cp-vendor-app.controllers')
     ModalService, ApiFactory, watchForControllerRefresh) {
   SecurityService.requireVendor();
 
-  refreshView();
-
-  watchForControllerRefresh('ReviewDetailCtrl', refreshView);
-
   function refreshView() {
     LoadingService.show();
 
     ApiFactory.getRecentReviews().success(function(response) {
       $scope.review = response.reviewsAndOrders.filter(function(review) {
-        return review.order.id == $stateParams.orderId;
-      });
-      console.log($scope.review);
+        return review.order.id === $stateParams.orderId;
+      })[0];
       LoadingService.hide();
     }).catch(function(response) {
       ModalService.infoModal('There has been an error, please try again later.');
       LoadingService.hide();
     });
   }
+
+  refreshView();
+
+  watchForControllerRefresh('ReviewDetailCtrl', refreshView);
 
 });

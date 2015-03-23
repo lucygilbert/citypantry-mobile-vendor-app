@@ -6,10 +6,13 @@ angular.module('cp-vendor-app.filters')
       return '';
     }
 
-    var formattedMessage = message.slice(0, 35);
+    var formattedMessage = message;
 
-    formattedMessage.length < 35 ? null : formattedMessage += '...';
+    if (formattedMessage.length > 35) {
+      formattedMessage = message.slice(0, 35);
+      formattedMessage += '...';
+    }
 
     return formattedMessage;
-  }
+  };
 });

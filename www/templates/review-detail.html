@@ -1,13 +1,15 @@
-<ion-view view-title="Order details">
+<ion-view view-title="Review details">
   <ion-content class="padding">
     <strong>Customer</strong>
-    <p>{{review[0].order.customerUser.name}}</p>
+    <p>{{review.order.customerUser.name}}</p>
     <strong>Company</strong>
-    <p>{{review[0].order.customer.company}}</p>
+    <p>{{review.order.customer.company}}</p>
     <strong>Package</strong>
-    <p>{{review[0].order.package.name}}</p>
+    <p>{{review.order.package.name}}</p>
+    <strong>Order #</strong>
+    <p class="id">{{review.order.humanId}}</p>
     <strong>Review Date</strong>
-    <p>{{review[0].review.date | date:'d MMM yyyy'}}</p>
+    <p class="date">{{review.review.date | date:'d MMM yyyy'}}</p>
     <strong>Review</strong>
     <p>{{review[0].review.review}}</p>
   </ion-content>

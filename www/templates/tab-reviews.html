@@ -4,9 +4,9 @@
       <div class="item item-divider">Recent reviews</div>
       <div class="item cp-item-body">
         <div>
-          <ion-item ng-repeat="review in orderReviews.reviewsAndOrders" type="item-text-wrap" href="#/tab/reviews/{{review.order.id}}">
-            <strong>{{review.order.customer.company}}</strong>
-            <p ng-bind="review.review.review | previewFormatter"></p>
+          <ion-item class="reviews" ng-repeat="review in orderReviews" type="item-text-wrap" href="#/tab/reviews/{{review.order.id}}">
+            <strong>{{review.order.package.name}}</strong>
+            <p><strong>{{review.order.customer.company}} said:</strong> {{review.review.review | previewFormatter}}</p>
           </ion-item>
           <ion-item type="item-text-wrap" ng-if="orderReviews.count == 0">No reviews to show.</ion-item>
         </div>
