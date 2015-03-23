@@ -67,6 +67,27 @@ angular.module('cp-vendor-app', [
       }
     }
   })
+
+  .state('tab.reviews', {
+    url: '/reviews',
+    views: {
+      'tab-reviews': {
+        templateUrl: 'templates/tab-reviews.html',
+        controller: 'ReviewsCtrl'
+      }
+    }
+  })
+
+  .state('tab.review-detail', {
+    url: '/reviews/:orderId',
+    views: {
+      'tab-reviews': {
+        templateUrl: 'templates/review-detail.html',
+        controller: 'ReviewDetailCtrl'
+      }
+    }
+  })
+
   .state('tab.message-detail', {
     url: '/messages/:orderId',
     views: {

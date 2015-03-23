@@ -30,6 +30,10 @@ angular.module('cp-vendor-app.factories', [])
       return ApiService.put(API_BASE + '/orders/' + id + '/messages', message);
     },
 
+    getRecentReviews: function() {
+      return ApiService.get(API_BASE + '/reviews/recent-by-current-vendor');
+    },
+
     logIn: function(email, password) {
       return ApiService.post(API_BASE + '/user/login', { email: email, plainPassword: password });
     },
