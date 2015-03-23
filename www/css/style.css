@@ -38,7 +38,7 @@
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100%;
-  background-image: url('../img/orders.png');
+  background-image: url('../img/orders.svg');
   opacity: 0.8;
   background-size:contain;
 }
@@ -47,7 +47,7 @@
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100%;
-  background-image: url('../img/orders.png');
+  background-image: url('../img/orders.svg');
   background-size:contain;
 }
 
@@ -55,7 +55,7 @@
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100%;
-  background-image: url('../img/messages.png');
+  background-image: url('../img/messages.svg');
   opacity: 0.8;
   background-size:contain;
 }
@@ -64,7 +64,7 @@
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100%;
-  background-image: url('../img/messages.png');
+  background-image: url('../img/messages.svg');
   background-size:contain;
 }
 
@@ -72,7 +72,7 @@
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100%;
-  background-image: url('../img/account.png');
+  background-image: url('../img/account.svg');
   opacity: 0.8;
   background-size:contain;
 }
@@ -81,6 +81,23 @@
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100%;
-  background-image: url('../img/account.png');
+  background-image: url('../img/account.svg');
+  background-size:contain;
+}
+
+.reviews {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/reviews.svg');
+  opacity: 0.8;
+  background-size:contain;
+}
+
+.reviews-on {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 100%;
+  background-image: url('../img/reviews.svg');
   background-size:contain;
 }

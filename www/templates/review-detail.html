@@ -1,0 +1,16 @@
+<ion-view view-title="Review details">
+  <ion-content class="padding">
+    <strong>Customer</strong>
+    <p>{{review.order.customerUser.name}}</p>
+    <strong>Company</strong>
+    <p>{{review.order.customer.company}}</p>
+    <strong>Package</strong>
+    <p>{{review.order.package.name}}</p>
+    <strong>Order #</strong>
+    <p class="id">{{review.order.humanId}}</p>
+    <strong>Review Date</strong>
+    <p class="date">{{review.review.date | date:'d MMM yyyy'}}</p>
+    <strong>Review</strong>
+    <p>{{review[0].review.review}}</p>
+  </ion-content>
+</ion-view>
