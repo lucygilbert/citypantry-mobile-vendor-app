@@ -11,8 +11,9 @@ describe('Unconfirmed order page', function() {
 
   it('should show order details on order details page', function() {
     expect(element.all(by.css('p')).get(1).getText()).toBe('Ask for someone');
-    expect(element.all(by.css('p')).get(2).getText()).toBe('Carrots');
-    expect(element.all(by.css('p')).get(3).getText()).toBe('5');
+    expect(element.all(by.css('p')).get(2).getText()).toContain('Paint your car');
+    expect(element.all(by.css('p')).get(3).getText()).toBe('Carrots');
+    expect(element.all(by.css('p')).get(4).getText()).toBe('5');
   });
 
   it('should hide Accept button once clicked', function() {
