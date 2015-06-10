@@ -1,12 +1,12 @@
 angular.module('cp-vendor-app.controllers')
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, $ionicPopup, ModalService, SecurityService,
-    LoadingService, watchForControllerRefresh, ApiFactory) {
+    LoadingService, ApiFactory) {
   SecurityService.requireVendor();
 
-  function refreshView() {
-    LoadingService.show();
+  LoadingService.show();
 
+  function refreshView() {
     ApiFactory.getOrderMessages($stateParams.orderId).success(function(response) {
       $scope.orderMessages = response;
 
@@ -18,8 +18,6 @@ angular.module('cp-vendor-app.controllers')
   }
 
   refreshView();
-
-  watchForControllerRefresh('MessageDetailCtrl', refreshView);
 
   $scope.showMessageBox = function() {
     ModalService.messageModal($stateParams.orderId, refreshView);

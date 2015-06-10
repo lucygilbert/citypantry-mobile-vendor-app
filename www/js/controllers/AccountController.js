@@ -1,27 +1,21 @@
 angular.module('cp-vendor-app.controllers', [])
 
 .controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $state, ApiFactory,
-    ModalService, LoadingService, SecurityService, watchForControllerRefresh) {
+    ModalService, LoadingService, SecurityService) {
   SecurityService.requireVendor();
 
-  function refreshView() {
-    LoadingService.show();
+  LoadingService.show();
 
-    $rootScope.vendor = {};
+  $rootScope.vendor = {};
 
-    ApiFactory.getAuthenticatedUser().success(function(response) {
-      $rootScope.vendor = response.vendor;
-      LoadingService.hide();
-    }).catch(function() {
-      ModalService.infoModal('There has been an error.');
-      LoadingService.hide();
-      $scope.logOut();
-    });
-  }
-
-  refreshView();
-
-  watchForControllerRefresh('OrdersCtrl', refreshView);
+  ApiFactory.getAuthenticatedUser().success(function(response) {
+    $rootScope.vendor = response.vendor;
+    LoadingService.hide();
+  }).catch(function() {
+    ModalService.infoModal('There has been an error.');
+    LoadingService.hide();
+    $scope.logOut();
+  });
 
   $scope.showEditBox = function(title, vendorKeyName, canBeEmpty, isNumeric) {
     ModalService.editModal(title, vendorKeyName, canBeEmpty, isNumeric);

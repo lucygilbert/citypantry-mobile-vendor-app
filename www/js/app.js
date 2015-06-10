@@ -18,7 +18,8 @@ angular.module('cp-vendor-app', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  $ionicConfigProvider.views.maxCache(0);
 
   $stateProvider
 
@@ -129,13 +130,4 @@ angular.module('cp-vendor-app', [
   });
 
   $urlRouterProvider.otherwise('/redirect-to-homepage');
-})
-
-.run(function($rootScope) {
-  $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams){
-    if (toState.views) {
-      var toController = toState.views[Object.keys(toState.views)[0]].controller;
-      $rootScope.$broadcast('refresh' + toController);
-    }
-  });
 });
