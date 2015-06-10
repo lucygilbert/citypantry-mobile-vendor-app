@@ -21,9 +21,9 @@ describe('Message pages', function() {
   });
 
   it('should display the messages on the details page', function() {
-    expect(element.all(by.css('h2')).get(1).getText()).toBe('Customer');
-    expect(element.all(by.css('h2')).get(2).getText()).toBe('Me');
-    expect(element.all(by.css('h2')).get(3).getText()).toBe('Customer');
+    expect(element.all(by.css('h2')).get(0).getText()).toBe('Customer');
+    expect(element.all(by.css('h2')).get(1).getText()).toBe('Me');
+    expect(element.all(by.css('h2')).get(2).getText()).toBe('Customer');
 
     expect(element.all(by.css('.message')).get(0).getText()).toBe('Hi, what colour are your carrots?');
     expect(element.all(by.css('.message')).get(1).getText()).toBe('They are orange or white.');
