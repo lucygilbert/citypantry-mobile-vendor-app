@@ -10,10 +10,10 @@ describe('Reviews pages', function() {
   });
 
   it('should display reviews', function() {
-    expect(element.all(by.css('ion-item.reviews strong')).first().getText()).toBe('Carrots');
-    expect(element.all(by.css('ion-item.reviews p')).first().getText()).toContain('They are always amazing');
-    expect(element.all(by.css('ion-item.reviews strong')).get(2).getText()).toBe('Marshmallows');
-    expect(element.all(by.css('ion-item.reviews p')).get(1).getText()).toContain('Order was 20 minutes late');
+    expect(element(by.cssContainingText('strong', 'Carrots')).isPresent()).toBe(true);
+    expect(element(by.cssContainingText('p', 'Very nice and very fresh!')).isPresent()).toBe(true);
+    expect(element(by.cssContainingText('strong', 'Marshmallows')).isPresent()).toBe(true);
+    expect(element(by.cssContainingText('p', 'Order was 20 minutes late')).isPresent()).toBe(true);
   });
 
   it('should redirect to review details on click', function() {
@@ -35,7 +35,6 @@ describe('Reviews pages', function() {
     expect(element(by.cssContainingText('p', 'Carrots')).isPresent()).toBe(true);
     expect(element(by.css('p.id')).getText()).toMatch(/^[0-9]+$/);
     expect(element(by.css('p.date')).getText()).toMatch(/^([1-9]|[12][0-9]|3[01]) [A-S][a-y]{2} 20\d\d$/);
-    expect(element(by.cssContainingText('p', 'They are always amazing')).isPresent()).toBe(true);
   });
 
 });
