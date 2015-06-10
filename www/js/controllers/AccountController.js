@@ -14,7 +14,6 @@ angular.module('cp-vendor-app.controllers', [])
   }).catch(function() {
     ModalService.infoModal('There has been an error.');
     LoadingService.hide();
-    $scope.logOut();
   });
 
   $scope.showEditBox = function(title, vendorKeyName, canBeEmpty, isNumeric) {

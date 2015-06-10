@@ -50,6 +50,8 @@ angular.module('cp-vendor-app.services')
         },
 
         requireVendor: function() {
+            this.requireLoggedIn();
+
             if (!this.isVendor()) {
                 $state.go('redirectToHomepage');
             }
