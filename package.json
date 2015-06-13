@@ -1,7 +1,7 @@
 {
-  "name": "mobile-app",
+  "name": "citypantry-app",
   "version": "1.0.0",
-  "description": "mobile-app: An Ionic project",
+  "description": "The City Pantry app.",
   "scripts": {
     "run-local": "gulp dev && ionic serve",
     "run-android": "gulp testenv && ionic run android",
