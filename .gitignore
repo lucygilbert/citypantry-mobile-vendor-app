@@ -10,3 +10,5 @@ www/js/api-base.js
 /.vagrant
 /npm-debug.log
 www/lib/lib-es*.js
+www/css/ionic.app.css
+www/css/ionic.app.min.css
