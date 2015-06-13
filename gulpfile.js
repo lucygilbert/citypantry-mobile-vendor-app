@@ -61,9 +61,9 @@ gulp.task('dev', function() {
     .pipe(gulp.dest('www/js/'));
 });
 
-gulp.task('testenv', function() {
+gulp.task('staging', function() {
   gulp.src('www/js-templates/api-base.js')
-    .pipe(preprocess({context: { ENV: 'TEST' }}))
+    .pipe(preprocess({context: { ENV: 'STAGING' }}))
     .pipe(gulp.dest('www/js/'));
 });
 
