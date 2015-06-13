@@ -18,21 +18,22 @@
     <h3>Delivery</h3>
 
     <strong>Delivery Address</strong>
-    <p ng-bind-html="order.deliveryAddress | addressSingleLineFormatter:'<br />'"></p>
+    <p ng-bind-html="order.deliveryAddress | addressSingleLineFormatter:'<br />'"
+      class="cp-order-delivery-address"></p>
 
     <strong>Delivery Instructions</strong>
-    <p>{{order.deliveryInstruction}}</p>
+    <p class="cp-order-delivery-instruction">{{order.deliveryInstruction}}</p>
 
     <strong>Parking Suggestion</strong>
-    <p>{{order.parkingSuggestion}}</p>
+    <p class="cp-order-parking-suggestion">{{order.parkingSuggestion}}</p>
 
     <h3>Package</h3>
 
     <strong>Package name</strong>
-    <p>{{order.package.name}}</p>
+    <p class="cp-order-package-name">{{order.package.name}}</p>
 
     <strong>Head count</strong>
-    <p>{{order.headCount}}</p>
+    <p class="cp-order-head-count">{{order.headCount}}</p>
 
     <strong>Vegetarian head count</strong>
     <p>{{order.vegetarianHeadCount}}</p>
