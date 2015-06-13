@@ -10,10 +10,18 @@ describe('Unconfirmed order page', function() {
   });
 
   it('should show order details on order details page', function() {
-    expect(element.all(by.css('p')).get(1).getText()).toBe('Ask for someone');
-    expect(element.all(by.css('p')).get(2).getText()).toContain('Paint your car');
-    expect(element.all(by.css('p')).get(3).getText()).toBe('Carrots');
-    expect(element.all(by.css('p')).get(4).getText()).toBe('5');
+    var expectations = {
+      'p.cp-order-delivery-instruction': 'Ask for someone',
+      'p.cp-order-parking-suggestion': 'Paint your car',
+      'p.cp-order-package-name': 'Carrots',
+      'p.cp-order-head-count': '5',
+    };
+
+    for (var selector in expectations) {
+      var selectorElement = element(by.css(selector));
+      scrollTo(selectorElement);
+      expect(selectorElement.getText()).toContain(expectations[selector]);
+    }
   });
 
   it('should hide Accept button once clicked', function() {

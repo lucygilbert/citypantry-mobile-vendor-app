@@ -21,13 +21,15 @@ describe('Message pages', function() {
   });
 
   it('should display the messages on the details page', function() {
-    expect(element.all(by.css('h2')).get(0).getText()).toBe('Customer');
-    expect(element.all(by.css('h2')).get(1).getText()).toBe('Me');
-    expect(element.all(by.css('h2')).get(2).getText()).toBe('Customer');
+    var senders = element.all(by.css('h2'));
+    expect(senders.get(0).getText()).toBe('Customer');
+    expect(senders.get(1).getText()).toBe('Me');
+    expect(senders.get(2).getText()).toBe('Customer');
 
-    expect(element.all(by.css('.message')).get(0).getText()).toBe('Hi, what colour are your carrots?');
-    expect(element.all(by.css('.message')).get(1).getText()).toBe('They are orange or white.');
-    expect(element.all(by.css('.message')).get(2).getText()).toBe('I want orange ones please.\n\nThanks.');
+    var messages = element.all(by.css('.message'));
+    expect(messages.get(0).getText()).toBe('I want orange ones please.\n\nThanks.');
+    expect(messages.get(1).getText()).toBe('They are orange or white.');
+    expect(messages.get(2).getText()).toBe('Hi, what colour are your carrots?');
   });
 
   it('should send a new message', function() {
@@ -38,6 +40,9 @@ describe('Message pages', function() {
 
     element(by.cssContainingText('.popup-buttons button', 'OK')).click();
 
-    expect(element.all(by.css('.message')).get(3).getText()).toBe('It\'s not about the money. It\'s about sending a message.');
+    // The order of the messages varies depending on how long it took to get to this test, because
+    // the fixture messages do not all have the same date sent. So we only assert that the count is
+    // now 4.
+    expect(element.all(by.css('.message')).count()).toBe(4);
   });
 });
