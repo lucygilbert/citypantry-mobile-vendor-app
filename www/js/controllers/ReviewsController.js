@@ -7,12 +7,16 @@ angular.module('cp-vendor-app.controllers')
   LoadingService.show();
 
   ReviewFactory.getRecentReviews().success(function(response) {
-    response.reviewsAndOrders.sort(function(a,b) {
-      var aDate = new Date(a.review.date);
-      var bDate = new Date(b.review.date);
-      return aDate - bDate;
-    });
-    $scope.orderReviews = response.reviewsAndOrders;
+    $scope.orderReviews = response.reviewsAndOrders
+      .filter(function(reviewAndOrder) {
+        return !!reviewAndOrder.review.review;
+      })
+      .sort(function(a, b) {
+        var aDate = new Date(a.review.date);
+        var bDate = new Date(b.review.date);
+        return aDate - bDate;
+      });
+
     LoadingService.hide();
   }).catch(function(response) {
     ModalService.infoModal('There has been an error, please try again later.');
