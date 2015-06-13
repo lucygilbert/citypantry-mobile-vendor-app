@@ -38,6 +38,28 @@
     <strong>Dietary requirements</strong>
     <p ng-bind-html="order.dietaryRequirements | dietaryRequirementsFormatter"></p>
 
+    <strong>Packaging type:</strong>
+    <p>{{ order.packagingTypeChoice | getPackagingTypeChoiceText }}</p>
+
+    <strong>Requested cutlery and serviettes?</strong>
+    <p>{{ order.willVendorDeliverCutleryAndServiettes ? 'Yes' : 'No' }}</p>
+
+    <strong>Requested you to set up after delivery?</strong>
+    <p>{{ order.willVendorSetUpAfterDelivery ? 'Yes' : 'No' }}</p>
+
+    <strong>Requested you to clean up after delivery?</strong>
+    <p>{{ order.willVendorCleanUpAfterDelivery ? 'Yes' : 'No' }}</p>
+
+    <strong>Messages</strong>
+    <p ng-if="order.hasMessages">
+      This order has messages between you and the customer.
+      <a ng-href="#/tab/messages/{{ order.id }}">Read them here</a>.
+    </p>
+    <p ng-if="!order.hasMessages">
+      This order does not have any messages between you and the customer.
+      <a ng-href="#/tab/messages/{{ order.id }}">Message the customer here</a>.
+    </p>
+
     <button id="acceptButton" class="button button-positive" ng-if="!accepted" ng-click="acceptOrder()">Accept</button>
   </ion-content>
 </ion-view>
