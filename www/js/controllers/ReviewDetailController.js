@@ -1,12 +1,12 @@
 angular.module('cp-vendor-app.controllers')
 
 .controller('ReviewDetailCtrl', function($scope, $stateParams, SecurityService, LoadingService,
-    ModalService, ApiFactory) {
+    ModalService, ReviewFactory) {
   SecurityService.requireVendor();
 
   LoadingService.show();
 
-  ApiFactory.getRecentReviews().success(function(response) {
+  ReviewFactory.getRecentReviews().success(function(response) {
     $scope.review = response.reviewsAndOrders.filter(function(review) {
       return review.order.id === $stateParams.orderId;
     })[0];

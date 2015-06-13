@@ -9,3 +9,4 @@ www/js/api-base.js
 /d2015*
 /.vagrant
 /npm-debug.log
+www/lib/lib-es*.js

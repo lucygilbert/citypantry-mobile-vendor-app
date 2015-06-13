@@ -1,6 +1,6 @@
 angular.module('cp-vendor-app.services')
 
-.service('ModalService', function($ionicPopup, $rootScope, ApiFactory) {
+.service('ModalService', function($ionicPopup, $rootScope, OrdersFactory, VendorsFactory) {
   var service = {
     infoModal: function(message, title) {
       title = title || 'Error';
@@ -25,7 +25,7 @@ angular.module('cp-vendor-app.services')
             text: 'Send',
             type: 'button-positive',
             onTap: function(e) {
-              ApiFactory.addOrderMessage(orderId, $rootScope.addMessageText).success(function() {
+              OrdersFactory.sendMessage(orderId, $rootScope.addMessageText.message).success(function() {
                 service.infoModal('Your message has been sent.', 'Information');
                 callback();
               }).catch(function() {
@@ -59,7 +59,7 @@ angular.module('cp-vendor-app.services')
               } else {
                 var updateInfo = {};
                 updateInfo[vendorKeyName] = $rootScope.vendor[vendorKeyName];
-                ApiFactory.updateSelf(updateInfo).success(function() {
+                VendorsFactory.updateSelf(updateInfo).success(function() {
                   service.infoModal('Your information has been updated.', 'Information');
 
                 }).catch(function() {

@@ -1,12 +1,12 @@
 angular.module('cp-vendor-app.controllers')
 
 .controller('MessagesCtrl', function($scope, ModalService, SecurityService,
-    LoadingService, ApiFactory) {
+    LoadingService, OrdersFactory) {
   SecurityService.requireVendor();
 
   LoadingService.show();
 
-  ApiFactory.getOrdersWithMessages().success(function(response) {
+  OrdersFactory.getOrdersWithMessages().success(function(response) {
     $scope.ordersWithMessages = response;
     LoadingService.hide();
   }).catch(function(response) {

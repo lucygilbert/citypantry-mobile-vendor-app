@@ -2,9 +2,8 @@ angular.module('cp-vendor-app', [
   'ionic',
   'cp-vendor-app.controllers',
   'cp-vendor-app.services',
-  'cp-vendor-app.filters',
-  'cp-vendor-app.factories',
   'cp-vendor-app.constants',
+  'cpLib',
   ])
 
 .run(function($ionicPlatform) {

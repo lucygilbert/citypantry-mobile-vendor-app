@@ -6,7 +6,7 @@
         <div>
           <ion-item class="reviews" ng-repeat="review in orderReviews" type="item-text-wrap" href="#/tab/reviews/{{review.order.id}}">
             <strong>{{review.order.package.name}}</strong>
-            <p><strong>{{review.order.customer.company}} said:</strong> {{review.review.review | previewFormatter}}</p>
+            <p><strong>{{review.order.customer.company}} said:</strong> {{review.review.review | previewMessageFormatter:35}}</p>
           </ion-item>
           <ion-item type="item-text-wrap" ng-if="orderReviews.count == 0">No reviews to show.</ion-item>
         </div>

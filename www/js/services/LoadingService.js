@@ -1,4 +1,4 @@
-angular.module('cp-vendor-app.services')
+angular.module('cp-vendor-app.services', [])
 
 .service('LoadingService', function($ionicLoading) {
   return {

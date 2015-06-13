@@ -12,7 +12,7 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['import-libs', 'sass', 'watch']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -24,6 +24,11 @@ gulp.task('sass', function(done) {
     .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
+});
+
+gulp.task('import-libs', function() {
+  gulp.src('./node_modules/citypantry-js-lib/dist/lib-es5-with-browser-polyfill.js')
+    .pipe(gulp.dest('./www/lib/'));
 });
 
 gulp.task('watch', function() {

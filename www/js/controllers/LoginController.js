@@ -1,10 +1,11 @@
 angular.module('cp-vendor-app.controllers')
 
-.controller('LoginCtrl', function($scope, $rootScope, $state, ApiFactory, ModalService, SecurityService) {
+.controller('LoginCtrl', function($scope, $rootScope, $state, AuthenticationFactory, ModalService, SecurityService) {
   SecurityService.requireLoggedOut();
   $scope.details = {};
   $scope.login = function() {
-      ApiFactory.logIn($scope.details.email, $scope.details.password).success(function(response) {
+      AuthenticationFactory.login({email:$scope.details.email, plainPassword:$scope.details.password})
+      .success(function(response) {
         $rootScope.isLoggedIn = true;
 
         localStorage.setItem('apiAuth', JSON.stringify(response.apiAuth));

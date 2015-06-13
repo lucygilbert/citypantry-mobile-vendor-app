@@ -18,7 +18,7 @@
     <h3>Delivery</h3>
 
     <strong>Delivery Address</strong>
-    <p ng-bind-html="order.deliveryAddress | addressFormatter:true"></p>
+    <p ng-bind-html="order.deliveryAddress | addressSingleLineFormatter:'<br />'"></p>
 
     <strong>Delivery Instructions</strong>
     <p>{{order.deliveryInstruction}}</p>
