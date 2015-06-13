@@ -35,11 +35,8 @@
     <strong>Head count</strong>
     <p class="cp-order-head-count">{{order.headCount}}</p>
 
-    <strong>Vegetarian head count</strong>
-    <p>{{order.vegetarianHeadCount}}</p>
-
-    <strong>Custom dietary requirements</strong>
-    <p>{{order.customDietaryRequirements ? order.customDietaryRequirements : 'None.'}}</p>
+    <strong>Dietary requirements</strong>
+    <p ng-bind-html="order.dietaryRequirements | dietaryRequirementsFormatter"></p>
 
     <button id="acceptButton" class="button button-positive" ng-if="!accepted" ng-click="acceptOrder()">Accept</button>
   </ion-content>
