@@ -1,16 +1,20 @@
 <ion-view view-title="Reviews">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Recent reviews</div>
-      <div class="item cp-item-body">
-        <div>
-          <ion-item class="reviews" ng-repeat="review in orderReviews" type="item-text-wrap" href="#/tab/reviews/{{review.order.id}}">
-            <strong>{{review.order.package.name}}</strong>
-            <p><strong>{{review.order.customer.company}} said:</strong> {{review.review.review | previewMessageFormatter:35}}</p>
-          </ion-item>
-          <ion-item type="item-text-wrap" ng-if="orderReviews.count == 0">No reviews to show.</ion-item>
-        </div>
+      <div class="item item-divider">Reviews from the last 7 days</div>
+
+      <div class="item cp-item-body" ng-if="orderReviews.length > 0">
+        <ion-item class="reviews" ng-repeat="review in orderReviews" type="item-text-wrap"
+            href="#/tab/reviews/{{review.order.id}}">
+          <strong>{{review.order.package.name}}</strong>
+          <p>
+            <strong>{{review.order.customer.company}} said:</strong>
+            {{review.review.review | previewMessageFormatter:35}}
+          </p>
+        </ion-item>
       </div>
+
+      <ion-item type="item-text-wrap" ng-if="orderReviews.length == 0">No reviews to show.</ion-item>
     </div>
   </ion-content>
 </ion-view>
