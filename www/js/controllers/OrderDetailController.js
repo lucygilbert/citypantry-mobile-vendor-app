@@ -1,12 +1,12 @@
 angular.module('cp-vendor-app.controllers')
 
 .controller('OrderDetailCtrl', function($scope, $stateParams, ModalService, SecurityService,
-    LoadingService, ApiFactory) {
+    LoadingService, OrdersFactory) {
   SecurityService.requireVendor();
 
   LoadingService.show();
 
-  ApiFactory.getOrder($stateParams.orderId).success(function(response) {
+  OrdersFactory.getOrder($stateParams.orderId).success(function(response) {
     $scope.order = response;
     $scope.accepted = response.status === 2;
 
@@ -17,7 +17,7 @@ angular.module('cp-vendor-app.controllers')
   });
 
   $scope.acceptOrder = function() {
-    ApiFactory.acceptOrder($stateParams.orderId).success(function() {
+    OrdersFactory.acceptOrder($stateParams.orderId).success(function() {
       $scope.accepted = true;
     }).catch(function() {
       ModalService.infoModal('There has been an error, please try again.');

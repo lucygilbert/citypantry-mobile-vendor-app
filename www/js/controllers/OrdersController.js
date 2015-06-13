@@ -1,12 +1,12 @@
 angular.module('cp-vendor-app.controllers')
 
-.controller('OrdersCtrl', function($scope, SecurityService, ApiFactory,
+.controller('OrdersCtrl', function($scope, SecurityService, OrdersFactory,
     ModalService, LoadingService) {
   SecurityService.requireVendor();
 
   LoadingService.show();
 
-  ApiFactory.getOrdersByCurrentVendor().success(function(response) {
+  OrdersFactory.getOrdersByCurrentVendor().success(function(response) {
     $scope.unconfirmedOrders = [];
     $scope.upcomingOrders = [];
 

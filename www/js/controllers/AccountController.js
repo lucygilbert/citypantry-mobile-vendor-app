@@ -1,6 +1,6 @@
 angular.module('cp-vendor-app.controllers', [])
 
-.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $state, ApiFactory,
+.controller('AccountCtrl', function($scope, $rootScope, $ionicPopup, $state, UsersFactory,
     ModalService, LoadingService, SecurityService) {
   SecurityService.requireVendor();
 
@@ -8,13 +8,12 @@ angular.module('cp-vendor-app.controllers', [])
 
   $rootScope.vendor = {};
 
-  ApiFactory.getAuthenticatedUser().success(function(response) {
+  UsersFactory.getLoggedInUser().success(function(response) {
     $rootScope.vendor = response.vendor;
     LoadingService.hide();
   }).catch(function() {
     ModalService.infoModal('There has been an error.');
     LoadingService.hide();
-    $scope.logOut();
   });
 
   $scope.showEditBox = function(title, vendorKeyName, canBeEmpty, isNumeric) {

@@ -27,7 +27,7 @@ describe('Message pages', function() {
 
     expect(element.all(by.css('.message')).get(0).getText()).toBe('Hi, what colour are your carrots?');
     expect(element.all(by.css('.message')).get(1).getText()).toBe('They are orange or white.');
-    expect(element.all(by.css('.message')).get(2).getText()).toBe('I want orange ones please.\nThanks.');
+    expect(element.all(by.css('.message')).get(2).getText()).toBe('I want orange ones please.\n\nThanks.');
   });
 
   it('should send a new message', function() {
