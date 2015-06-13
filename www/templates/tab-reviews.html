@@ -12,9 +12,9 @@
             {{review.review.review | previewMessageFormatter:35}}
           </p>
         </ion-item>
-
-        <ion-item type="item-text-wrap" ng-if="orderReviews.count == 0">No reviews to show.</ion-item>
       </div>
+
+      <ion-item type="item-text-wrap" ng-if="orderReviews.length == 0">No reviews to show.</ion-item>
     </div>
   </ion-content>
 </ion-view>
