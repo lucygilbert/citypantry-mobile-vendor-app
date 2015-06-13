@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.mobileapp719652" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>City Pantry</name>
+  <name>City Pantry app</name>
   <description>
-        The City Pantry app, for vendors.
-    </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
-    </author>
+    The City Pantry app.
+  </description>
+  <author email="support@citypantry.com" href="http://citypantry.com/">
+    City Pantry Ltd.
+  </author>
   <content src="index.html"/>
   <access origin="*"/>
   <access origin="tel:*" launch-external="yes" />
