@@ -79,7 +79,7 @@ angular.module('cp-vendor-app', [
   })
 
   .state('tab.review-detail', {
-    url: '/reviews/:orderId',
+    url: '/reviews/:reviewId',
     views: {
       'tab-reviews': {
         templateUrl: 'templates/review-detail.html',

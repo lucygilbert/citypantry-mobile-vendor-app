@@ -1,16 +1,24 @@
 <ion-view view-title="Review details">
   <ion-content class="padding">
     <strong>Customer</strong>
-    <p>{{review.order.customerUser.name}}</p>
+    <p>{{order.customerUser.name}}</p>
     <strong>Company</strong>
-    <p>{{review.order.customer.company}}</p>
+    <p>{{order.customer.company}}</p>
     <strong>Package</strong>
-    <p>{{review.order.package.name}}</p>
+    <p>{{order.package.name}}</p>
     <strong>Order #</strong>
-    <p class="id">{{review.order.humanId}}</p>
+    <p class="id">{{order.humanId}}</p>
     <strong>Review Date</strong>
-    <p class="date">{{review.review.date | date:'d MMM yyyy'}}</p>
+    <p class="date">{{review.date | date:'d MMM yyyy'}}</p>
+    <strong>Ratings</strong>
+    <p>
+      <span ng-bind-html="review.overallRating.value ? 'Overall: ' + review.ovarallRating.value + ' out of 5<br />' : ''"></span>
+      <span ng-bind-html="review.foodQualityRating.value ? 'Food quality: ' + review.foodQualityRating.value + ' out of 5<br />' : ''"></span>
+      <span ng-bind-html="review.presentationRating.value ? 'Presentation: ' + review.presentationRating.value + ' out of 5<br />' : ''"></span>
+      <span ng-bind-html="review.deliveryRating.value ? 'Delivery: ' + review.deliveryRating.value + ' out of 5<br />' : ''"></span>
+      <span ng-bind-html="review.recommendToFriendRating.value ? 'Recommend to a friend: ' + review.recommendToFriendRating.value + ' out of 10' : ''"></span>
+    </p>
     <strong>Review</strong>
-    <p>{{review.review.review}}</p>
+    <p>{{review.review}}</p>
   </ion-content>
 </ion-view>
