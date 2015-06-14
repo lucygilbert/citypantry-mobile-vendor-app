@@ -5,7 +5,7 @@
 
       <div class="item cp-item-body" ng-if="orderReviews.length > 0">
         <ion-item class="reviews" ng-repeat="review in orderReviews" type="item-text-wrap"
-            href="#/tab/reviews/{{review.order.id}}">
+            href="#/tab/reviews/{{review.review.id}}">
           <strong>{{review.order.package.name}}</strong>
           <p>
             <strong>{{review.order.customer.company}} said:</strong>
