@@ -129,4 +129,19 @@ angular.module('cp-vendor-app', [
   });
 
   $urlRouterProvider.otherwise('/redirect-to-homepage');
+})
+.run(function($rootScope, UsersFactory, $window) {
+  var isLoggedIn = JSON.parse(localStorage.getItem('apiAuth'));
+  if (isLoggedIn) {
+    UsersFactory.getLoggedInUser().catch(function(response) {
+      if (response.status === 401) {
+        // The user's ID or auth token is no longer valid. This is possibly because this is
+        // a dev or staging site and the database fixtures have been reloaded.
+        $rootScope.isLoggedIn = false;
+        localStorage.removeItem('apiAuth');
+        localStorage.removeItem('user');
+        $window.location.href = '/#/login';
+      }
+    });
+  }
 });
